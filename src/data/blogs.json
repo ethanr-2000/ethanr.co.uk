@@ -1,0 +1,56 @@
+[
+{
+  "title": "Tracking Dyson’s Public Image Using 46,166 Tweets",
+  "subtitle": "A Lesson In Google Natural Language API and BigQuery",
+  "date": "Sep 30, 2020",
+  "link": "https://towardsdatascience.com/tracking-dysons-public-image-using-46-166-tweets-68af509923a6"
+},
+{
+  "title": "How My Deep Frying Messenger Bot Works",
+  "subtitle": "Diving deeper into the FBChat library and Deeppyer",
+  "date": "Nov 13, 2020",
+  "link": "https://medium.com/swlh/how-my-deep-frying-messenger-bot-works-8f163557d847"
+},
+{
+  "title": "How to Set up a Facebook Messenger Bot to Deep Fry Images on Your Group Chats",
+  "subtitle": "It’s free and surprisingly easy",
+  "date": "Nov 13, 2020",
+  "link": "https://medium.com/swlh/how-to-set-up-a-facebook-messenger-bot-to-deep-fry-images-on-your-group-chats-69581d2e3a7f"
+},
+{
+  "title": "The Easiest Way to Run Python In Google Cloud (Illustrated)",
+  "subtitle": "Everything you need to know to get started hosting your projects in Google Cloud for free",
+  "date": "Nov 29, 2020",
+  "link": "https://towardsdatascience.com/the-easiest-way-to-run-python-in-google-cloud-illustrated-d307c9e1651c"
+},
+{
+  "title": "I Forced An AI To Read 80 Tim Denning Articles And It’s Now A Bad Inspirational Quote Machine",
+  "subtitle": "Here are the highlights",
+  "date": "Dec 4, 2020",
+  "link": "https://towardsdatascience.com/i-forced-an-ai-to-read-80-tim-denning-articles-and-its-now-a-bad-inspirational-quote-machine-ea9805d73ddc"
+},
+{
+  "title": "English Spelling Is Even Worse Than You Thought",
+  "subtitle": "An Analysis of the Spelling and Pronunciations of Over 80 Thousand Words",
+  "date": "Jan 11, 2021",
+  "link": "https://towardsdatascience.com/english-spelling-is-even-worse-than-you-thought-284047e5f1d6"
+},
+{
+  "title": "How Password Manager Cryptography Keeps Your Data Safe",
+  "subtitle": "A look behind the curtain at some very clever systems",
+  "date": "Feb 12, 2021",
+  "link": "https://ethanr2000.medium.com/how-password-manager-cryptography-keeps-your-data-safe-ce3b52333590"
+},
+{
+  "title": "Using PID to Cheat an OpenAI Challenge",
+  "subtitle": "What is PID in practice and how do you implement it?",
+  "date": "May 22, 2021",
+  "link": "https://ethanr2000.medium.com/using-pid-to-cheat-an-openai-challenge-f17745226449"
+},
+{
+  "title": "“OK Google. What Bin Do I Need To Put Out?”",
+  "subtitle": "Reverse engineering my local council’s website, and a journey of Google Assistant Integration",
+  "date": "Oct 14, 2021",
+  "link": "https://ethanr2000.medium.com/ok-google-what-bin-do-i-need-to-put-out-7ae3e6b5f26b"
+}
+]
