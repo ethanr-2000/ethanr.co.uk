@@ -16,6 +16,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Install Node
+      uses: actions/setup-node@v3
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Build
+      run: npm run build
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -23,5 +32,4 @@ jobs:
         aws-region: eu-west-2
 
     - name: Copy files to the website with the AWS CLI
-      run: |
-        aws s3 sync build/ s3://ethanr.co.uk --acl public-read
+      run: npm run deploy
