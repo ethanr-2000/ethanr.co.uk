@@ -1,6 +1,6 @@
 {
-  "name": "ethanr.co.uk",
-  "version": "0.0.0",
+  "name": "@ethanr-2000/ethanr.co.uk",
+  "version": "0.2.0",
   "scripts": {
     "build": "nx affected --target=build --exclude=ethanr.co.uk",
     "bundle": "nx affected --target=bundle --exclude=ethanr.co.uk",
@@ -21,7 +21,7 @@
   "packageManager": "pnpm@9.15.4",
   "nx": {},
   "dependencies": {
-    "ethanr.co.uk": "file:"
+    "@ethanr-2000/ethanr.co.uk": "file:"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
-  "name": "ethanr.co.uk-website",
-  "version": "0.1.0",
+  "name": "@ethanr-2000/ethanr.co.uk-website",
+  "version": "0.2.0",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -11,7 +11,7 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
-    "ethanr.co.uk-website": "file:",
+    "@ethanr-2000/ethanr.co.uk-website": "file:",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-bootstrap-icons": "^1.11.5",

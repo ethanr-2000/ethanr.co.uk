@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      ethanr.co.uk:
+      '@ethanr-2000/ethanr.co.uk':
         specifier: 'file:'
         version: 'file:'
     devDependencies:
@@ -39,7 +39,7 @@ importers:
 
   packages/terraform:
     dependencies:
-      ethanr.co.uk:
+      '@ethanr-2000/ethanr.co.uk':
         specifier: 'file:'
         version: 'link:'
     devDependencies:
@@ -52,15 +52,15 @@ importers:
 
   packages/website:
     dependencies:
+      '@ethanr-2000/ethanr.co.uk-website':
+        specifier: 'file:'
+        version: 'link:'
       bootstrap:
         specifier: ^5.3.3
         version: 5.3.3(@popperjs/core@2.11.8)
       bootstrap-icons:
         specifier: ^1.11.3
         version: 1.11.3
-      ethanr.co.uk-website:
-        specifier: 'file:'
-        version: 'link:'
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -1004,6 +1004,9 @@ packages:
   '@eslint/js@8.57.1':
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@ethanr-2000/ethanr.co.uk@file:':
+    resolution: {directory: '', type: directory}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -3087,9 +3090,6 @@ packages:
   etag@1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
-
-  'ethanr.co.uk@file:':
-    resolution: {directory: '', type: directory}
 
   eventemitter3@4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
@@ -7517,6 +7517,8 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
+  '@ethanr-2000/ethanr.co.uk@file:': {}
+
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -10022,8 +10024,6 @@ snapshots:
   esutils@2.0.3: {}
 
   etag@1.8.1: {}
-
-  'ethanr.co.uk@file:': {}
 
   eventemitter3@4.0.7: {}
 
