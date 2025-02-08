@@ -1,6 +1,6 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk-terraform",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "scripts": {
     "build": "echo \"No build step for terraform\"",
     "bundle": "rimraf ../../build/ethanr.co.uk-terraform && copyfiles \"**/**\" \"../../build/ethanr.co.uk-terraform\""
@@ -11,7 +11,12 @@
   },
   "packageManager": "pnpm@9.15.4",
   "nx": {},
-  "dependencies": {
-    "@ethanr-2000/ethanr.co.uk": "file:"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ethanr-2000/ethanr.co.uk.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "restricted"
   }
 }
