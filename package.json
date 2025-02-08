@@ -2,10 +2,10 @@
   "name": "@ethanr-2000/ethanr.co.uk",
   "version": "0.2.0",
   "scripts": {
-    "build": "nx run-many --target=build --all --exclude=ethanr.co.uk",
-    "bundle": "nx run-many --target=bundle --all --exclude=ethanr.co.uk",
-    "lint": "nx run-many --target=lint --all --exclude=ethanr.co.uk",
-    "test": "nx run-many --target=test --all --exclude=ethanr.co.uk",
+    "build": "nx run-many --target=build --all --exclude=@ethanr-2000/ethanr.co.uk",
+    "bundle": "nx run-many --target=bundle --all --exclude=@ethanr-2000/ethanr.co.uk",
+    "lint": "nx run-many --target=lint --all --exclude=@ethanr-2000/ethanr.co.uk",
+    "test": "nx run-many --target=test --all --exclude=@ethanr-2000/ethanr.co.uk",
     "prepare": "husky"
   },
   "devDependencies": {

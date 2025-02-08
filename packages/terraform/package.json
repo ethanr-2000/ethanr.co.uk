@@ -2,6 +2,7 @@
   "name": "@ethanr-2000/ethanr.co.uk-terraform",
   "version": "0.2.0",
   "scripts": {
+    "build": "echo \"No build step for terraform\"",
     "bundle": "rimraf ../../build/ethanr.co.uk-terraform && copyfiles \"**/**\" \"../../build/ethanr.co.uk-terraform\""
   },
   "devDependencies": {
