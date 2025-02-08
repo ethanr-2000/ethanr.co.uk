@@ -1,18 +1,33 @@
 {
   "name": "ethanr.co.uk",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "scripts": {
-    "build": "nx run-many --target=build --all --exclude=ethanr.co.uk",
-    "bundle": "nx run-many --target=bundle --all --exclude=ethanr.co.uk",
-    "lint": "nx run-many --target=lint --all --exclude=ethanr.co.uk",
-    "test": "nx run-many --target=test --all --exclude=ethanr.co.uk"
+    "build": "nx affected --target=build --exclude=ethanr.co.uk",
+    "bundle": "nx affected --target=bundle --exclude=ethanr.co.uk",
+    "lint": "nx affected --target=lint --exclude=ethanr.co.uk",
+    "test": "nx affected --target=test --exclude=ethanr.co.uk",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^19.7.1",
+    "@nx/js": "20.4.2",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "commitlint": "^19.7.1",
+    "husky": "^9.1.7",
     "nx": "20.4.2"
   },
   "packageManager": "pnpm@9.15.4",
   "nx": {},
   "dependencies": {
     "ethanr.co.uk": "file:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ethanr-2000/ethanr.co.uk.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }

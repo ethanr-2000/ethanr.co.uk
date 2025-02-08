@@ -4,7 +4,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "aws s3 sync build/ s3://ethanr.co.uk --acl public-read",
+    "bundle": "rimraf ../../build/ethanr.co.uk-website && copyfiles \"build/**\" \"../../build/ethanr.co.uk-website/\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -21,6 +21,10 @@
     "react-scripts": "^5.0.1",
     "ts-node": "^10.9.1",
     "web-vitals": "^4.2.4"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "rimraf": "^3.0.2"
   },
   "browserslist": {
     "production": [

@@ -1,0 +1,16 @@
+{
+  "name": "ethanr.co.uk-terraform",
+  "version": "0.1.0",
+  "scripts": {
+    "bundle": "rimraf ../../build/ethanr.co.uk-terraform && copyfiles \"**/**\" \"../../build/ethanr.co.uk-terraform\""
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "rimraf": "^3.0.2"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "nx": {},
+  "dependencies": {
+    "ethanr.co.uk": "file:"
+  }
+}

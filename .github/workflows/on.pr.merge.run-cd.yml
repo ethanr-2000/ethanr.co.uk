@@ -1,0 +1,17 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-publish:
+    name: 'Build & Publish'
+    uses: './.github/workflows/reusable.root.build-publish.yml'
+    with:
+      aws-region: 'eu-west-2'
+      project: 'er'
+      component: 'website'
+      group: 'main'
+      environment: 'dev'
+      terraform_version: '1.0.0'
+      tag_version: 'main'

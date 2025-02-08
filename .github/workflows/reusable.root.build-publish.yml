@@ -1,14 +1,13 @@
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
+
 
 jobs:
-  deployStatic:
-    name: Deploy Static
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
+    outputs:
+      tag_version: ${{ steps.publish.outputs.tag_version }}
     permissions:
       id-token: write
       contents: read
@@ -20,24 +19,19 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v4
-
+      
     - name: Install Node
       uses: actions/setup-node@v4
       with:
         node-version: 22
         cache: 'pnpm'
-      
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_NUMBER }}:role/github_oidc
-        aws-region: eu-west-2
 
     - name: Install Dependencies
       run: pnpm install
 
-    - name: Build
-      run: pnpm build
+    - name: Bundle
+      run: pnpm bundle
 
-    - name: Deploy
-      run: cd packages/website && pnpm run deploy
+    - name: Publish
+      id: publish
+      run: pnpm publish --dry-run
