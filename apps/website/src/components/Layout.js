@@ -8,7 +8,7 @@ function Layout({...props}) {
   return (
     <div>
       <Container>
-        <Row>
+        <Row >
           <Col lg={3} xs={12}>
             <Sidebar/>
           </Col>
