@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-publish:
+    name: 'Build & Publish'
+    uses: './.github/workflows/reusable.root.build-publish.yml'
+
+  deploy:
+    if: ${{ needs.build-publish.outputs.tag-version }}
+    name: 'Deploy'
+    uses: './.github/workflows/reusable.root.deploy.yml'
+    secrets: inherit
+    with:
+      tag-version: ${{ needs.build-publish.outputs.tag-version }}
+      terraform-version: 1.10.5
+      aws-region: eu-west-2
+      project: er
+      component: website
+      group: main
+      environment: prod

@@ -2,18 +2,57 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "defaultBase": "main",
   "targetDefaults": {
+    "bundle": {
+      "cache": false,
+      "dependsOn": ["build"]
+    },
     "build": {
-      "outputs": [
-        "{projectRoot}/build"
-      ],
+      "outputs": ["{projectRoot}/build"],
       "cache": true
     },
     "test": {
-      "outputs": [
-        "{projectRoot}/coverage"
-      ],
+      "outputs": ["{projectRoot}/coverage"],
       "cache": true
     }
   },
-  "nxCloudId": "67a735b88d90e340a02cfd68"
+  "release": {
+    "projects": ["*"],
+    "version": {
+      "conventionalCommits": true,
+      "generatorOptions": {
+        "fallbackCurrentVersionResolver": "disk"
+      }
+    },
+    "changelog": {
+      "automaticFromRef": true,
+      "workspaceChangelog": {
+        "createRelease": "github"
+      }
+    },
+    "conventionalCommits": {
+      "types": {
+        "chore": {
+          "hidden": false,
+          "semverBump": "none"
+        }
+      }
+    }
+  },
+  "nxCloudId": "67a735b88d90e340a02cfd68",
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": {
+          "targetName": "build",
+          "configName": "tsconfig.lib.json",
+          "buildDepsName": "build-deps",
+          "watchDepsName": "watch-deps"
+        }
+      }
+    }
+  ]
 }

@@ -1,0 +1,37 @@
+{
+  "s3_bucket_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:s3:::er-tfscaffold-197239729734-eu-west-2"
+  },
+  "s3_bucket_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "er-tfscaffold-197239729734-eu-west-2"
+  },
+  "s3_bucket_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "er-tfscaffold-197239729734-eu-west-2"
+  },
+  "s3_bucket_policy": {
+    "sensitive": false,
+    "type": "string",
+    "value": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"DontAllowNonSecureConnection\",\n      \"Effect\": \"Deny\",\n      \"Action\": \"s3:*\",\n      \"Resource\": [\n        \"arn:aws:s3:::er-tfscaffold-197239729734-eu-west-2/*\",\n        \"arn:aws:s3:::er-tfscaffold-197239729734-eu-west-2\"\n      ],\n      \"Principal\": {\n        \"AWS\": \"*\"\n      },\n      \"Condition\": {\n        \"Bool\": {\n          \"aws:SecureTransport\": \"false\"\n        }\n      }\n    },\n    {\n      \"Sid\": \"AllowManagedAccountsToList\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"s3:ListBucket\",\n      \"Resource\": \"arn:aws:s3:::er-tfscaffold-197239729734-eu-west-2\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::197239729734:root\"\n      }\n    },\n    {\n      \"Sid\": \"AllowManagedAccountsToGet\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"s3:GetObject\",\n      \"Resource\": \"arn:aws:s3:::er-tfscaffold-197239729734-eu-west-2/*\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::197239729734:root\"\n      }\n    }\n  ]\n}"
+  },
+  "s3_kms_key_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:kms:eu-west-2:197239729734:key/e91c6d01-7bad-40cf-932a-2801cf023498"
+  },
+  "s3_kms_key_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "e91c6d01-7bad-40cf-932a-2801cf023498"
+  },
+  "s3_kms_key_policy": {
+    "sensitive": false,
+    "type": "string",
+    "value": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"AllowLocalIAMAdministration\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::197239729734:root\"\n      }\n    },\n    {\n      \"Sid\": \"AllowManagedAccountsToUse\",\n      \"Effect\": \"Allow\",\n      \"Action\": [\n        \"kms:ReEncrypt\",\n        \"kms:GenerateDataKeyWithoutPlaintext\",\n        \"kms:GenerateDataKeyPairWithoutPlaintext\",\n        \"kms:GenerateDataKeyPair\",\n        \"kms:GenerateDataKey\",\n        \"kms:Encrypt\",\n        \"kms:DescribeKey\",\n        \"kms:Decrypt\"\n      ],\n      \"Resource\": \"*\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::197239729734:root\"\n      }\n    }\n  ]\n}"
+  }
+}

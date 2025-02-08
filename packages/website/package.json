@@ -1,17 +1,17 @@
 {
-  "name": "ethanr.co.uk-website",
-  "version": "0.1.0",
+  "name": "@ethanr-2000/ethanr.co.uk-website",
+  "version": "0.2.0",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "aws s3 sync build/ s3://ethanr.co.uk --acl public-read",
+    "bundle": "rimraf ../../build/ethanr.co.uk-website && copyfiles \"build/**\" \"../../build/ethanr.co.uk-website/\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
-    "ethanr.co.uk-website": "file:",
+    "@ethanr-2000/ethanr.co.uk-website": "file:",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-bootstrap-icons": "^1.11.5",
@@ -21,6 +21,10 @@
     "react-scripts": "^5.0.1",
     "ts-node": "^10.9.1",
     "web-vitals": "^4.2.4"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "rimraf": "^3.0.2"
   },
   "browserslist": {
     "production": [

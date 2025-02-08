@@ -1,0 +1,25 @@
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+
+jobs:
+  build-publish:
+    name: 'Build & Publish'
+    uses: './.github/workflows/reusable.root.build-publish.yml'
+    with:
+      prerelease: true
+
+  deploy:
+    name: 'Deploy'
+    if: ${{ needs.build-publish.outputs.tag-version }}
+    uses: './.github/workflows/reusable.root.deploy.yml'
+    with:
+      tag-version: ${{ needs.build-publish.outputs.tag-version }}
+      terraform-version: 1.10.5
+      aws-region: eu-west-2
+      project: er
+      component: website
+      group: main
+      environment: dev
