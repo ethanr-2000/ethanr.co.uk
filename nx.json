@@ -17,16 +17,24 @@
   },
   "release": {
     "projects": ["*"],
-    "git": {
-      "commitMessage": "chore: updated version"
-    },
     "version": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "generatorOptions": {
+        "fallbackCurrentVersionResolver": "disk"
+      }
     },
     "changelog": {
-      "projectChangelogs": {
-        "file": "CHANGELOG.md",
+      "automaticFromRef": true,
+      "workspaceChangelog": {
         "createRelease": "github"
+      }
+    },
+    "conventionalCommits": {
+      "types": {
+        "chore": {
+          "hidden": false,
+          "semverBump": "none"
+        }
       }
     }
   },

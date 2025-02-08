@@ -1,13 +1,23 @@
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      prerelease:
+        description: 'Create a pre-release'
+        required: false
+        default: false
+        type: boolean
 
+    outputs:
+      tag-version:
+        description: 'Tag version built e.g. v1.0.0-foo'
+        value: ${{ jobs.build-publish.outputs.tag-version }}
 
 jobs:
-  deploy:
-    name: Deploy
+  build-publish:
+    name: Build & Publish
     runs-on: ubuntu-latest
     outputs:
-      tag_version: ${{ steps.publish.outputs.tag_version }}
+      tag-version: ${{ steps.release.outputs.tag-version }}
     permissions:
       id-token: write
       contents: read
@@ -32,6 +42,69 @@ jobs:
     - name: Bundle
       run: pnpm bundle
 
-    - name: Publish
-      id: publish
-      run: pnpm publish --dry-run
+    - name: Configure Git Author
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "noreply@github.com"
+
+    - name: Set SHA
+      if: ${{ inputs.prerelease }}
+      run: |
+        declare sha=$(git rev-parse --short HEAD)
+        echo "SHA=$sha" >> $GITHUB_ENV
+
+    - name: Release
+      id: release
+      env:
+        SHA: ${{ env.SHA }}
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { releaseChangelog, releasePublish, releaseVersion } = require('nx/release');
+
+          const SHA = process.env.SHA;
+          const prerelease = ${{ inputs.prerelease}};
+
+          if (prerelease) {
+            const { workspaceVersion, projectsVersionData } = await releaseVersion({ dryRun: true, verbose: true });
+
+            console.log({ workspaceVersion, projectsVersionData });
+            if (!workspaceVersion) {
+              console.log('No new version');
+              return;
+            }
+
+            const newVersion = workspaceVersion + '-${{ github.ref }}-' + SHA;
+
+            for (const key in projectsVersionData) {
+              projectsVersionData[key] = newVersion;
+            }
+
+            await releaseVersion({
+              dryRun: true,
+              specifier: newVersion,
+              verbose: true
+            });
+
+            await releaseChangelog({
+              dryRun: true,
+              version: newVersion,
+              versionData: projectsVersionData, 
+              createRelease: false, 
+              verbose: true
+            });
+
+            await releasePublish({
+              verbose: true,
+              tag: '${{ github.ref }}'
+            });
+
+            core.setOutput('tag-version', newVersion);
+          } else {
+            const { workspaceVersion, projectsVersionData } = await releaseVersion({ verbose: true });
+            await releaseChangelog({ version: workspaceVersion, versionData: projectsVersionData, verbose: true });
+            await releasePublish({ verbose: true });
+
+            core.setOutput('tag-version', workspaceVersion);
+          }

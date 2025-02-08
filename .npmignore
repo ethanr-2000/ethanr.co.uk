@@ -1,0 +1,8 @@
+.git
+.github
+.husky
+.nx
+build
+node_modules
+
+.gitignore

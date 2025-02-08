@@ -1,32 +1,39 @@
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      terraform_version:
+      terraform-version:
         description: 'Terraform version to use e.g. 1.0.5'
+        type: string
         required: true
 
-      tag_version:
+      tag-version:
         description: 'Tag version to deploy e.g. v1.0.0'
+        type: string
         required: true
 
       aws-region:
         description: 'AWS Region to deploy to e.g. eu-west-2'
+        type: string
         required: true
 
       project:
         description: 'TF Project to deploy e.g. er'
+        type: string
         required: true
 
       component:
         description: 'TF Component to deploy e.g. website'
+        type: string
         required: true
 
       group:
         description: 'TF Group to deploy e.g. main'
+        type: string
         required: true
       
       environment:
         description: 'TF Environment to deploy to e.g. dev, staging, prod'
+        type: string
         required: true
 
 jobs:
@@ -42,15 +49,15 @@ jobs:
       with:
         version: 9.15.4
 
-    - name: Checkout ${{ inputs.tag_version }}
+    - name: Checkout ${{ inputs.tag-version }}
       uses: actions/checkout@v4
       with:
-        ref: ${{ inputs.tag_version }}
+        ref: ${{ inputs.tag-version }}
 
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: ${{ inputs.terraform_version }}
+        terraform_version: ${{ inputs.terraform-version }}
 
     - name: Install Node
       uses: actions/setup-node@v4
@@ -69,7 +76,7 @@ jobs:
       run: |
         ENV_FILE=./etc/env_${{ inputs.aws-region }}_${{ inputs.environment }}.tfvars
         echo "environment = \"${{ inputs.environment }}\"" > $ENV_FILE
-        echo "package_version = \"${{ inputs.tag_version }}\"" >> $ENV_FILE
+        echo "package_version = \"${{ inputs.tag-version }}\"" >> $ENV_FILE
 
     - name: Plan
       env:
