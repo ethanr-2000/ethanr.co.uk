@@ -22,6 +22,12 @@ jobs:
       id-token: write
       contents: read
     steps:
+    - name: Build Cache
+      uses: actions/cache@v4
+      with:
+        path: ./build
+        key: ${{ runner.os }}-build-${{ github.sha }}
+
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:

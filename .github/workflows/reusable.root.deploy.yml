@@ -44,6 +44,13 @@ jobs:
       id-token: write
       contents: read
     steps:
+    - name: Restore Build Cache
+      uses: actions/cache/restore@v4
+      with:
+        path: ./build
+        key: ${{ runner.os }}-build-${{ github.sha }}
+        fail-on-cache-miss: true
+  
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
