@@ -1,10 +1,12 @@
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types: [closed]
 
 jobs:
   build-publish:
+    if: '${{ github.event.pull_request.merged }}'
     name: 'Build & Publish'
     uses: './.github/workflows/reusable.root.build-publish.yml'
 
