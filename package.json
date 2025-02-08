@@ -1,49 +1,18 @@
 {
   "name": "ethanr.co.uk",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3",
-    "ethanr.co.uk": "file:",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.10.1",
-    "react-bootstrap-icons": "^1.11.3",
-    "react-dom": "^18.2.0",
-    "react-router": "^6.22.3",
-    "react-router-dom": "^6.22.3",
-    "react-scripts": "^5.0.1",
-    "ts-node": "^10.9.1",
-    "web-vitals": "^1.0.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "deploy": "aws s3 sync build/ s3://ethanr.co.uk --acl public-read",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "build": "nx run-many --target=build --all --exclude=ethanr.co.uk",
+    "bundle": "nx run-many --target=bundle --all --exclude=ethanr.co.uk",
+    "lint": "nx run-many --target=lint --all --exclude=ethanr.co.uk",
+    "test": "nx run-many --target=test --all --exclude=ethanr.co.uk"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "nx": "20.4.2"
   },
-  "nx": {}
+  "packageManager": "pnpm@9.15.4",
+  "nx": {},
+  "dependencies": {
+    "ethanr.co.uk": "file:"
+  }
 }
