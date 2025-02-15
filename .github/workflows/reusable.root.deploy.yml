@@ -42,8 +42,9 @@ on:
         required: true
 
 jobs:
-  deploy:
-    name: Deploy
+  plan:
+    name: Plan
+    if: ${{ github.event.inputs.plan == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -77,7 +78,6 @@ jobs:
         echo "package_version = \"${{ inputs.tag-version }}\"" >> $ENV_FILE
 
     - name: Plan
-      if: github.event.inputs.plan == 'true'
       env:
         REGION: ${{ inputs.aws-region }}
         PROJECT: ${{ inputs.project }}
@@ -95,6 +95,41 @@ jobs:
           -c $COMPONENT \
           -e $ENVIRONMENT \
           -a plan
+
+  apply:
+    name: Apply
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Restore Build Cache
+      uses: actions/cache/restore@v4
+      with:
+        path: build
+        key: ${{ runner.os }}-build-${{ github.sha }}
+        fail-on-cache-miss: true
+
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: ${{ inputs.terraform-version }}
+      
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::197239729734:role/TerraformExecution
+        aws-region: eu-west-2
+
+    - name: Show Directory Structure
+      run: tree -ra
+
+    - name: Set Package Version In Env
+      working-directory: ./build/ethanr.co.uk-terraform
+      run: |
+        ENV_FILE=./etc/env_${{ inputs.aws-region }}_${{ inputs.environment }}.tfvars
+        echo "package_version = \"${{ inputs.tag-version }}\"" >> $ENV_FILE
         
     - name: Apply
       env:
