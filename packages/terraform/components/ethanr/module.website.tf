@@ -3,7 +3,11 @@ module "website" {
 
   aws = local.aws
 
-  fqdn            = "ethanr.co.uk"
+  fqdn                = var.fqdn
+  hosted_zone_id      = aws_route53_zone.main.zone_id
+  ssl_certificate_arn = aws_acm_certificate.main.arn
+  # ssl_certificate_arn = ""
+  
   package_version = var.package_version
 
   module_parents = []

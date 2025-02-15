@@ -30,6 +30,16 @@ variable "unique_ids" {
 # Variables specific to this Module
 ##
 
+variable "ssl_certificate_arn" {
+  type        = string
+  description = "The ARN of the SSL certificate for the website"
+}
+
+variable "hosted_zone_id" {
+  type        = string
+  description = "The Route53 Hosted Zone ID for the website"
+}
+
 variable fqdn {
   type        = string
   description = "The fully qualified domain name for the website"
