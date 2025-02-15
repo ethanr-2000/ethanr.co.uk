@@ -1,3 +1,13 @@
+## 0.4.4 (2025-02-15)
+
+### 🩹 Fixes
+
+- env var ([#13](https://github.com/ethanr-2000/ethanr.co.uk/pull/13))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.4.3 (2025-02-15)
 
 ### 🩹 Fixes
