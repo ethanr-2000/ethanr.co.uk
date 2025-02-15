@@ -36,6 +36,8 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
       
     - name: Install Node
       uses: actions/setup-node@v4
@@ -73,9 +75,11 @@ jobs:
           const { releaseChangelog, releasePublish, releaseVersion } = require('nx/release');
 
           const SHA = process.env.SHA;
-          const prerelease = ${{ inputs.prerelease}};
+          const prerelease = ${{ inputs.prerelease }};
 
           if (prerelease) {
+            console.log('Creating pre-release');
+
             const { workspaceVersion, projectsVersionData } = await releaseVersion({ dryRun: true, verbose: true });
 
             console.log({ workspaceVersion, projectsVersionData });
@@ -84,21 +88,21 @@ jobs:
               return;
             }
 
-            const newVersion = workspaceVersion + '-${{ github.ref }}-' + SHA;
+            const prereleaseVersion = workspaceVersion + '-' + SHA;
 
             for (const key in projectsVersionData) {
-              projectsVersionData[key] = newVersion;
+              projectsVersionData[key] = prereleaseVersion;
             }
 
             await releaseVersion({
               dryRun: true,
-              specifier: newVersion,
+              specifier: prereleaseVersion,
               verbose: true
             });
 
             await releaseChangelog({
               dryRun: true,
-              version: newVersion,
+              version: prereleaseVersion,
               versionData: projectsVersionData, 
               createRelease: false, 
               verbose: true
@@ -109,7 +113,7 @@ jobs:
               tag: '${{ github.ref }}'
             });
 
-            core.setOutput('tag-version', newVersion);
+            core.setOutput('tag-version', prereleaseVersion);
           } else {
             const { workspaceVersion, projectsVersionData } = await releaseVersion({ verbose: true });
             await releaseChangelog({ version: workspaceVersion, versionData: projectsVersionData, verbose: true });

@@ -3,7 +3,8 @@
   "version": "0.3.1",
   "scripts": {
     "build": "echo \"No build step for terraform\"",
-    "bundle": "rimraf ../../build/ethanr.co.uk-terraform && copyfiles \"**/**\" \"../../build/ethanr.co.uk-terraform\""
+    "bundle": "rimraf ../../build/ethanr.co.uk-terraform && copyfiles \"**/**\" \"../../build/ethanr.co.uk-terraform\"",
+    "test": "echo \"No test step for terraform\""
   },
   "devDependencies": {
     "copyfiles": "^2.4.1",

@@ -5,7 +5,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "bundle": "rimraf ../../build/ethanr.co.uk-website && cd build && copyfiles \"**/**\" \"../../../build/ethanr.co.uk-website\"",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage --watchAll=false --passWithNoTests",
     "eject": "react-scripts eject"
   },
   "dependencies": {
