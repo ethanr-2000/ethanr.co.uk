@@ -14,8 +14,6 @@ jobs:
       id-token: write
       contents: write
       packages: write
-      actions: write
-      attestations: write
 
   deploy:
     name: 'Deploy'
@@ -35,6 +33,7 @@ jobs:
   delete-artifacts:
     name: 'Delete Feature Artifacts'
     needs: build-publish
+    secrets: inherit
     permissions:
       id-token: write
       packages: write
