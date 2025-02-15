@@ -43,8 +43,18 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 22
-        cache: 'pnpm'
         registry-url: 'https://npm.pkg.github.com'
+
+    - name: Get PNPM Store
+      run: echo "PNPM_STORE=$(pnpm store path)" >> $GITHUB_ENV
+
+    - name: PNPM Cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.PNPM_STORE }}
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-
 
     - name: PNPM Auth
       run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
@@ -78,7 +88,7 @@ jobs:
       with:
         github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         script: |
-          const { releaseChangelog, releasePublish, releaseVersion } = require('nx/release');
+          const { release, releaseChangelog, releasePublish, releaseVersion } = require('nx/release');
 
           const SHA = process.env.SHA;
           const prerelease = ${{ inputs.prerelease }};
@@ -122,10 +132,7 @@ jobs:
 
             core.setOutput('tag-version', prereleaseVersion);
           } else {
-            const { workspaceVersion, projectsVersionData } = await releaseVersion({ verbose: true });
-            await releaseChangelog({ version: workspaceVersion, versionData: projectsVersionData, verbose: true });
-            await releasePublish({ verbose: true });
-
+            const { workspaceVersion } = await release({ verbose: true });
             core.setOutput('tag-version', workspaceVersion);
           }
           process.exit(0)
