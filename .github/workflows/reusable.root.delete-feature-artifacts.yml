@@ -53,8 +53,10 @@ jobs:
       with:
         github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         script: |
+          const { releaseVersion } = require('nx/release');
+
           async function deletePackage(packageName, version) {
-            const matchingPackages = await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByAuthenticatedUser({
+            const matchingPackages = await github.rest.packages.getAllPackageVersionsForPackageOwnedByAuthenticatedUser({
               package_type: 'npm',
               package_name: packageName,
             });
@@ -69,7 +71,7 @@ jobs:
             console.log(`Found ${featureVersions.length} feature versions to delete: ${JSON.stringify(featureVersions)}`);
             featureVersions.forEach(async (v) => {
               console.log(`Deleting ${packageName}@${v.version}`);
-              await octokit.rest.packages.deletePackageVersionForAuthenticatedUser({
+              await github.rest.packages.deletePackageVersionForAuthenticatedUser({
                 package_type: 'npm',
                 package_name: packageName,
                 package_version_id: v.id

@@ -133,7 +133,7 @@ jobs:
 
             core.setOutput('tag-version', prereleaseVersion);
           } else {
-            const { workspaceVersion } = await release({ verbose: true });
+            const { workspaceVersion } = await release({ verbose: true, yes: true });
             core.setOutput('tag-version', workspaceVersion);
           }
           process.exit(0)
