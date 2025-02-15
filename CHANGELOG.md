@@ -1,3 +1,13 @@
+## 0.4.3 (2025-02-15)
+
+### 🩹 Fixes
+
+- pnpm cache ([#12](https://github.com/ethanr-2000/ethanr.co.uk/pull/12))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.4.2 (2025-02-15)
 
 ### 🩹 Fixes
