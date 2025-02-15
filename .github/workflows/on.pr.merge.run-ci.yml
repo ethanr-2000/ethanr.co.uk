@@ -25,6 +25,6 @@ jobs:
       terraform-version: 1.10.5
       aws-region: eu-west-2
       project: er
-      component: website
+      component: ethanr
       group: main
       environment: dev
