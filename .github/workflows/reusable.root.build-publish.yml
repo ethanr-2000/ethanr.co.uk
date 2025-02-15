@@ -20,7 +20,8 @@ jobs:
       tag-version: ${{ steps.release.outputs.tag-version }}
     permissions:
       id-token: write
-      contents: read
+      contents: write
+      packages: write
     steps:
     - name: Build Cache
       uses: actions/cache@v4

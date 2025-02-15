@@ -78,11 +78,10 @@ jobs:
         role-to-assume: arn:aws:iam::197239729734:role/github_oidc
         aws-region: eu-west-2
 
-    - name: Generate Env
+    - name: Set Package Version In Env
       working-directory: ./node_modules/ethanr.co.uk/build/ethanr.co.uk-terraform
       run: |
         ENV_FILE=./etc/env_${{ inputs.aws-region }}_${{ inputs.environment }}.tfvars
-        echo "environment = \"${{ inputs.environment }}\"" > $ENV_FILE
         echo "package_version = \"${{ inputs.tag-version }}\"" >> $ENV_FILE
 
     - name: Plan

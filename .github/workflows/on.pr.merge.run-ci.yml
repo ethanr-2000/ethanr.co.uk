@@ -13,6 +13,7 @@ jobs:
 
   deploy:
     name: 'Deploy'
+    needs: build-publish
     if: ${{ needs.build-publish.outputs.tag-version }}
     uses: './.github/workflows/reusable.root.deploy.yml'
     with:

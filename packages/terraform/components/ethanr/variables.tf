@@ -44,8 +44,14 @@ variable "default_tags" {
 }
 
 ##
-# Variables specific to the "example" Component
+# Variables specific to the "ethanr" Component
 ##
+
+variable "hosted_zone_id" {
+  type        = string
+  description = "The Route53 Hosted Zone ID. Leave blank to create"
+  default     = ""
+}
 
 variable "fqdn" {
   type        = string
@@ -55,5 +61,5 @@ variable "fqdn" {
 
 variable "package_version" {
   type        = string
-  description = "The version of ethanr.co.uk. E.g. 1.2.13"
+  description = "The version of ethanr.co.uk. E.g. 1.2.13" 
 }

@@ -19,7 +19,6 @@ resource "aws_cloudfront_distribution" "main" {
     target_origin_id = local.s3_origin_id
 
     origin_request_policy_id = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf" # Managed-CORS-S3Origin
-    # viewer_protocol_policy   = "allow-all"
     viewer_protocol_policy   = "redirect-to-https" # TODO switch to this once we have a valid SSL certificate
     cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6" # Managed-CachingOptimized
   }
@@ -52,10 +51,6 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   tags = local.default_tags
-
-  # viewer_certificate {
-  #   cloudfront_default_certificate = true
-  # }
 
   viewer_certificate {
     acm_certificate_arn      = var.ssl_certificate_arn
