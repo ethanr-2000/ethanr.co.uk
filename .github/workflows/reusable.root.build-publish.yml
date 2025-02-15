@@ -53,6 +53,8 @@ jobs:
       run: pnpm install
 
     - name: Bundle
+      env:
+        NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
       run: pnpm bundle
 
     - name: Configure Git Author
@@ -71,6 +73,7 @@ jobs:
       env:
         SHA: ${{ env.SHA }}
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
       uses: actions/github-script@v7
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
