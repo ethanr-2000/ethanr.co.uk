@@ -18,6 +18,9 @@
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/",
-    "access": "restricted"
+    "access": "restricted",
+    "executableFiles": [
+      "./bin/terraform.sh"
+    ]
   }
 }

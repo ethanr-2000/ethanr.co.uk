@@ -47,28 +47,14 @@ jobs:
     - name: Restore Build Cache
       uses: actions/cache/restore@v4
       with:
-        path: ./build
+        path: build
         key: ${{ runner.os }}-build-${{ github.sha }}
         fail-on-cache-miss: true
-  
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 10.4.0
-
-    - name: Checkout
-      uses: actions/checkout@v4
 
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: ${{ inputs.terraform-version }}
-
-    - name: Install Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: 'pnpm'
       
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -76,7 +62,7 @@ jobs:
         role-to-assume: arn:aws:iam::197239729734:role/github_oidc
         aws-region: eu-west-2
 
-    - name: Tree
+    - name: Show Directory Structure
       run: tree -ra
 
     - name: Set Package Version In Env
