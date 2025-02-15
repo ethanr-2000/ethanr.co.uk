@@ -1,3 +1,13 @@
+## 0.4.2 (2025-02-15)
+
+### 🩹 Fixes
+
+- use PAT ([#11](https://github.com/ethanr-2000/ethanr.co.uk/pull/11))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.4.1 (2025-02-15)
 
 ### 🩹 Fixes
