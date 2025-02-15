@@ -46,6 +46,9 @@ jobs:
         cache: 'pnpm'
         registry-url: 'https://npm.pkg.github.com'
 
+    - name: PNPM Auth
+      run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.GITHUB_TOKEN }}
+
     - name: Install Dependencies
       run: pnpm install
 

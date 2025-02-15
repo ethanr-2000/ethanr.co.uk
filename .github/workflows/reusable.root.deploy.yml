@@ -80,6 +80,7 @@ jobs:
         ENVIRONMENT: ${{ inputs.environment }}
       working-directory: ./build/ethanr.co.uk-terraform
       run: |
+        chmod +x ./bin/terraform.sh
         ./bin/terraform.sh \
           -t -n -w \
           -r $REGION \
@@ -98,6 +99,7 @@ jobs:
         ENVIRONMENT: ${{ inputs.environment }}
       working-directory: ./build/ethanr.co.uk-terraform
       run: |
+        chmod +x ./bin/terraform.sh
         ./bin/terraform.sh \
           -t -n -w \
           -r $REGION \
