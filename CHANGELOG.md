@@ -1,3 +1,13 @@
+## 0.4.1 (2025-02-15)
+
+### 🩹 Fixes
+
+- perms ([#10](https://github.com/ethanr-2000/ethanr.co.uk/pull/10))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.4.0 (2025-02-15)
 
 ### 🚀 Features
