@@ -9,6 +9,11 @@ jobs:
     if: '${{ github.event.pull_request.merged }}'
     name: 'Build & Publish'
     uses: './.github/workflows/reusable.root.build-publish.yml'
+    secrets: inherit
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
 
   deploy:
     name: 'Deploy'
@@ -21,6 +26,15 @@ jobs:
       terraform-version: 1.10.5
       aws-region: eu-west-2
       project: er
-      component: website
+      component: ethanr
       group: main
       environment: prod
+
+  delete-artifacts:
+    name: 'Delete Feature Artifacts'
+    needs: build-publish
+    permissions:
+      id-token: write
+      packages: write
+    uses: './.github/workflows/reusable.root.delete-feature-artifacts.yml'
+    

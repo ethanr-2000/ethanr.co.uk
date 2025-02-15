@@ -1,6 +1,11 @@
 on:
   workflow_call:
     inputs:
+      plan:
+        description: 'Whether to Terraform Plan before deploying'
+        type: boolean
+        default: true
+
       terraform-version:
         description: 'Terraform version to use e.g. 1.0.5'
         type: string
@@ -47,52 +52,41 @@ jobs:
     - name: Restore Build Cache
       uses: actions/cache/restore@v4
       with:
-        path: ./build
+        path: build
         key: ${{ runner.os }}-build-${{ github.sha }}
         fail-on-cache-miss: true
-  
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 9.15.4
-
-    - name: Checkout ${{ inputs.tag-version }}
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ inputs.tag-version }}
 
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: ${{ inputs.terraform-version }}
-
-    - name: Install Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: 'pnpm'
       
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        role-to-assume: arn:aws:iam::197239729734:role/github_oidc
+        role-to-assume: arn:aws:iam::197239729734:role/TerraformExecution
         aws-region: eu-west-2
 
+    - name: Show Directory Structure
+      run: tree -ra
+
     - name: Set Package Version In Env
-      working-directory: ./node_modules/ethanr.co.uk/build/ethanr.co.uk-terraform
+      working-directory: ./build/ethanr.co.uk-terraform
       run: |
         ENV_FILE=./etc/env_${{ inputs.aws-region }}_${{ inputs.environment }}.tfvars
         echo "package_version = \"${{ inputs.tag-version }}\"" >> $ENV_FILE
 
     - name: Plan
+      if: github.event.inputs.plan == 'true'
       env:
         REGION: ${{ inputs.aws-region }}
         PROJECT: ${{ inputs.project }}
         COMPONENT: ${{ inputs.component }}
         GROUP: ${{ inputs.group }}
         ENVIRONMENT: ${{ inputs.environment }}
-      working-directory: ./node_modules/ethanr.co.uk/build/ethanr.co.uk-terraform
+      working-directory: ./build/ethanr.co.uk-terraform
       run: |
+        chmod +x ./bin/terraform.sh
         ./bin/terraform.sh \
           -t -n -w \
           -r $REGION \
@@ -109,8 +103,9 @@ jobs:
         COMPONENT: ${{ inputs.component }}
         GROUP: ${{ inputs.group }}
         ENVIRONMENT: ${{ inputs.environment }}
-      working-directory: ./node_modules/ethanr.co.uk/build/ethanr.co.uk-terraform
+      working-directory: ./build/ethanr.co.uk-terraform
       run: |
+        chmod +x ./bin/terraform.sh
         ./bin/terraform.sh \
           -t -n -w \
           -r $REGION \

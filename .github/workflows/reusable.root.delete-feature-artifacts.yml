@@ -1,0 +1,86 @@
+on:
+  workflow_call:
+
+jobs:
+  delete-artifacts:
+    name: Delete Artifacts
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
+    steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.4.0
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+      
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: 'pnpm'
+        registry-url: 'https://npm.pkg.github.com'
+
+    - name: Install Dependencies
+      run: pnpm install
+
+    - name: Bundle
+      run: pnpm bundle
+
+    - name: Delete Artifacts
+      id: delete
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          async function deletePackage(packageName, version) {
+            const matchingPackages = await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByAuthenticatedUser({
+              package_type: 'npm',
+              package_name: packageName,
+            });
+
+            const featureVersions = matchingPackages.data
+              .filter((v) => v.name.startsWith(`${version}-`))
+              .map((v) => ({
+                id: v.id,
+                version: v.name
+              }));
+
+            console.log(`Found ${featureVersions.length} feature versions to delete: ${JSON.stringify(featureVersions)}`);
+            featureVersions.forEach(async (v) => {
+              console.log(`Deleting ${packageName}@${v.version}`);
+              await octokit.rest.packages.deletePackageVersionForAuthenticatedUser({
+                package_type: 'npm',
+                package_name: packageName,
+                package_version_id: v.id
+              })
+            });
+          }
+
+          const { workspaceVersion, projectsVersionData } = await releaseVersion({ dryRun: true });
+
+          console.log({ workspaceVersion, projectsVersionData });
+          if (!workspaceVersion) {
+            console.log('No new version');
+            process.exit(0);
+          }
+
+          const deletePromises = Object.entries(projectsVersionData).map(async ([key, value]) => {
+            if (key.includes('/')) {
+              // Do not include the scope e.g. @ethanr-2000/ethanr.co.uk => ethanr.co.uk
+              key = key.split('/')[1];
+            }
+            console.log(`Deleting ${key} versions starting with ${value.newVersion}-`);
+            return deletePackage(key, value.newVersion);
+          });
+
+          await Promise.all(deletePromises);
+          process.exit(0);

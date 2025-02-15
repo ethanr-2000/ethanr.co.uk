@@ -3,16 +3,30 @@
   "defaultBase": "main",
   "targetDefaults": {
     "bundle": {
-      "cache": false,
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/build/**/*"
+      ],
+      "outputs": ["{workspaceRoot}/build"],
       "dependsOn": ["build"]
     },
     "build": {
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/**/*",
+        "!{projectRoot}/build/**/*",
+        "!{projectRoot}/coverage/**/*"
+      ],
       "outputs": ["{projectRoot}/build"],
-      "cache": true
+      "dependsOn": ["test"]
     },
     "test": {
-      "outputs": ["{projectRoot}/coverage"],
-      "cache": true
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/**/*",
+        "!{projectRoot}/build/**/*"
+      ],
+      "outputs": ["{projectRoot}/coverage"]
     }
   },
   "release": {

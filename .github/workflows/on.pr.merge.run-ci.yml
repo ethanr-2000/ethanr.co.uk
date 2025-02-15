@@ -8,6 +8,11 @@ jobs:
   build-publish:
     name: 'Build & Publish'
     uses: './.github/workflows/reusable.root.build-publish.yml'
+    secrets: inherit
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
     with:
       prerelease: true
 
@@ -17,10 +22,11 @@ jobs:
     if: ${{ needs.build-publish.outputs.tag-version }}
     uses: './.github/workflows/reusable.root.deploy.yml'
     with:
+      plan: false
       tag-version: ${{ needs.build-publish.outputs.tag-version }}
       terraform-version: 1.10.5
       aws-region: eu-west-2
       project: er
-      component: website
+      component: ethanr
       group: main
       environment: dev
