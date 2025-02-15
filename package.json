@@ -1,6 +1,6 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk",
-  "version": "0.3.1",
+  "version": "0.4.0-ethanfeature",
   "scripts": {
     "build": "nx run-many --target=build --all --exclude=@ethanr-2000/ethanr.co.uk",
     "bundle": "nx run-many --target=bundle --all --exclude=@ethanr-2000/ethanr.co.uk",
@@ -11,6 +11,7 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^19.7.1",
     "@nx/js": "^20.4.4",
+    "@actions/github": "^6.0.0",
     "@swc-node/register": "~1.9.2",
     "@swc/core": "~1.5.29",
     "@swc/helpers": "~0.5.15",

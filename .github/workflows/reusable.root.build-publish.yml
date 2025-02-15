@@ -85,6 +85,7 @@ jobs:
             console.log({ workspaceVersion, projectsVersionData });
             if (!workspaceVersion) {
               console.log('No new version');
+              process.exit(0);
               return;
             }
 

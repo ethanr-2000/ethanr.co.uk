@@ -24,3 +24,5 @@ yarn-error.log*
 
 .nx/cache
 .nx/workspace-data
+
+scratch/

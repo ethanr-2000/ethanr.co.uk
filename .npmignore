@@ -2,5 +2,6 @@
 .github
 .husky
 .nx
-node_modules
+node_modules/
 .gitignore
+scratch/
