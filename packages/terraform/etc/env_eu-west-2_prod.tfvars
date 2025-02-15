@@ -1,2 +1,4 @@
 environment = "prod"
-package_version = "0.0.0"
+
+# Uncomment and set to appropriate version for local deployment
+# package_version = "x.x.x"

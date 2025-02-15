@@ -11,8 +11,9 @@ jobs:
     uses: './.github/workflows/reusable.root.build-publish.yml'
 
   deploy:
-    if: ${{ needs.build-publish.outputs.tag-version }}
     name: 'Deploy'
+    needs: build-publish
+    if: ${{ needs.build-publish.outputs.tag-version }}
     uses: './.github/workflows/reusable.root.deploy.yml'
     secrets: inherit
     with:
