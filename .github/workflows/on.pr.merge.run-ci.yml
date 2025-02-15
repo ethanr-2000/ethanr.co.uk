@@ -8,6 +8,10 @@ jobs:
   build-publish:
     name: 'Build & Publish'
     uses: './.github/workflows/reusable.root.build-publish.yml'
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
     with:
       prerelease: true
 

@@ -76,6 +76,9 @@ jobs:
         role-to-assume: arn:aws:iam::197239729734:role/github_oidc
         aws-region: eu-west-2
 
+    - name: Tree
+      run: tree -ra
+
     - name: Set Package Version In Env
       working-directory: ./build/ethanr.co.uk-terraform
       run: |
