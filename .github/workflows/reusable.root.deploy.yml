@@ -54,12 +54,10 @@ jobs:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
-        version: 9.15.4
+        version: 10.4.0
 
-    - name: Checkout ${{ inputs.tag-version }}
+    - name: Checkout
       uses: actions/checkout@v4
-      with:
-        ref: ${{ inputs.tag-version }}
 
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v1
