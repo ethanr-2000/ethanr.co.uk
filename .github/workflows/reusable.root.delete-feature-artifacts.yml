@@ -26,6 +26,9 @@ jobs:
         cache: 'pnpm'
         registry-url: 'https://npm.pkg.github.com'
 
+    - name: PNPM Auth
+      run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+
     - name: Install Dependencies
       run: pnpm install
 
@@ -35,10 +38,10 @@ jobs:
     - name: Delete Artifacts
       id: delete
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         script: |
           async function deletePackage(packageName, version) {
             const matchingPackages = await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByAuthenticatedUser({

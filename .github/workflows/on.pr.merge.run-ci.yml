@@ -13,8 +13,6 @@ jobs:
       id-token: write
       contents: write
       packages: write
-      actions: write
-      attestations: write
     with:
       prerelease: true
 

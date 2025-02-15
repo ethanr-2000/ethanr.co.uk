@@ -22,8 +22,6 @@ jobs:
       id-token: write
       contents: write
       packages: write
-      actions: write
-      attestations: write
     steps:
     - name: Build Cache
       uses: actions/cache@v4
@@ -49,7 +47,7 @@ jobs:
         registry-url: 'https://npm.pkg.github.com'
 
     - name: PNPM Auth
-      run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.GITHUB_TOKEN }}
+      run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
 
     - name: Install Dependencies
       run: pnpm install
@@ -74,11 +72,11 @@ jobs:
       id: release
       env:
         SHA: ${{ env.SHA }}
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         script: |
           const { releaseChangelog, releasePublish, releaseVersion } = require('nx/release');
 
