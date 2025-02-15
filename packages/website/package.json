@@ -1,6 +1,6 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk-website",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

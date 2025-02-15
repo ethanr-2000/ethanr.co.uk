@@ -1,3 +1,13 @@
+## 0.4.5 (2025-02-15)
+
+### 🩹 Fixes
+
+- nx yes ([#14](https://github.com/ethanr-2000/ethanr.co.uk/pull/14))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.4.4 (2025-02-15)
 
 ### 🩹 Fixes

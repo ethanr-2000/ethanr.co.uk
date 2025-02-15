@@ -1,6 +1,6 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk-terraform",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "scripts": {
     "build": "echo \"No build step for terraform\"",
     "bundle": "rimraf ../../build/ethanr.co.uk-terraform && copyfiles -e \"node_modules/**/*\" -e \"plugin-cache/**/*\" \"**/*\" \"../../build/ethanr.co.uk-terraform\"",
