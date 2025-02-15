@@ -23,8 +23,18 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 22
-        cache: 'pnpm'
         registry-url: 'https://npm.pkg.github.com'
+
+    - name: Get PNPM Store
+      run: echo "PNPM_STORE=$(pnpm store path)" >> $GITHUB_ENV
+
+    - name: PNPM Cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.PNPM_STORE }}
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-
 
     - name: PNPM Auth
       run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
