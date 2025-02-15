@@ -21,6 +21,7 @@ jobs:
     if: ${{ needs.build-publish.outputs.tag-version }}
     uses: './.github/workflows/reusable.root.deploy.yml'
     with:
+      plan: false
       tag-version: ${{ needs.build-publish.outputs.tag-version }}
       terraform-version: 1.10.5
       aws-region: eu-west-2
