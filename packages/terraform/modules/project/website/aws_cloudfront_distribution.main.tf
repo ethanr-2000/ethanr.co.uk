@@ -3,32 +3,43 @@ resource "aws_cloudfront_distribution" "main" {
     domain_name              = aws_s3_bucket.assets.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
     origin_id                = local.s3_origin_id
+    origin_path              = "/current/website"
   }
 
   enabled             = true
   is_ipv6_enabled     = true
   comment             = var.unique_ids.local
-  default_root_object = "current/website/index.html"
+  default_root_object = "index.html"
 
-  # aliases = [var.fqdn]
+  aliases = [var.fqdn, "*.${var.fqdn}"]
 
   default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.s3_origin_id
 
-    forwarded_values {
-      query_string = false
+    origin_request_policy_id = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf" # Managed-CORS-S3Origin
+    # viewer_protocol_policy   = "allow-all"
+    viewer_protocol_policy   = "redirect-to-https" # TODO switch to this once we have a valid SSL certificate
+    cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6" # Managed-CachingOptimized
+  }
 
-      cookies {
-        forward = "none"
-      }
-    }
+  custom_error_response {
+    error_code            = 400
+    response_code         = 200
+    response_page_path    = "/index.html"
+  }
 
-    viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+  custom_error_response {
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/index.html"
+  }
+
+  custom_error_response {
+    error_code            = 404
+    response_code         = 200
+    response_page_path    = "/index.html"
   }
 
   price_class = "PriceClass_100"
@@ -42,7 +53,13 @@ resource "aws_cloudfront_distribution" "main" {
 
   tags = local.default_tags
 
+  # viewer_certificate {
+  #   cloudfront_default_certificate = true
+  # }
+
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = var.ssl_certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 }

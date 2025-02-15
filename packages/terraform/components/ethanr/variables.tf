@@ -47,6 +47,12 @@ variable "default_tags" {
 # Variables specific to the "example" Component
 ##
 
+variable "fqdn" {
+  type        = string
+  description = "The FQDN of the website"
+  default = "ethanr.uk"
+}
+
 variable "package_version" {
   type        = string
   description = "The version of ethanr.co.uk. E.g. 1.2.13"

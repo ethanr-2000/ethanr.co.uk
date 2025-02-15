@@ -8,7 +8,6 @@ resource "aws_s3_object" "assets_current" {
   etag = filemd5("${local.asset_root}/${each.value}")
 
   content_type = lookup(local.mime_types, regex(".*\\.([a-zA-Z0-9]+)$", each.value)[0], "application/octet-stream")
-  acl          = "public-read"
 }
 
 resource "aws_s3_object" "assets" {
@@ -21,5 +20,4 @@ resource "aws_s3_object" "assets" {
   etag = filemd5("${local.asset_root}/${each.value}")
 
   content_type = lookup(local.mime_types, regex(".*\\.([a-zA-Z0-9]+)$", each.value)[0], "application/octet-stream")
-  acl          = "public-read"
 }

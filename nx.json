@@ -17,6 +17,7 @@
   },
   "release": {
     "projects": ["*"],
+    "projectsRelationship": "fixed",
     "version": {
       "conventionalCommits": true,
       "generatorOptions": {
