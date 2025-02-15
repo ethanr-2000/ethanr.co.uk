@@ -93,13 +93,13 @@ jobs:
             }
 
             const prereleaseVersion = workspaceVersion + '-' + SHA;
+            console.log('Using Prerelease Version:', prereleaseVersion);
 
             for (const key in projectsVersionData) {
               projectsVersionData[key] = prereleaseVersion;
             }
 
             await releaseVersion({
-              dryRun: true,
               specifier: prereleaseVersion,
               verbose: true
             });
