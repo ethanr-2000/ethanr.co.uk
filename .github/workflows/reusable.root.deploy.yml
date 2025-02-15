@@ -44,7 +44,7 @@ on:
 jobs:
   plan:
     name: Plan
-    if: ${{ github.event.inputs.plan == 'true' }}
+    if: ${{ inputs.plan == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
