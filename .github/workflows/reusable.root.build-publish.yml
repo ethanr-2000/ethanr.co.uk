@@ -110,7 +110,6 @@ jobs:
             });
 
             await releasePublish({
-              dryRun: true,
               verbose: true,
               tag: '${{ github.ref }}'
             });

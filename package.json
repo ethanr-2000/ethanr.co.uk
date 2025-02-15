@@ -1,6 +1,6 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk",
-  "version": "0.4.0-ethanfeature",
+  "version": "0.3.1",
   "scripts": {
     "build": "nx run-many --target=build --all --exclude=@ethanr-2000/ethanr.co.uk",
     "bundle": "nx run-many --target=bundle --all --exclude=@ethanr-2000/ethanr.co.uk",
