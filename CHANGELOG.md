@@ -1,3 +1,23 @@
+## 0.4.0 (2025-02-15)
+
+### 🚀 Features
+
+- initial domain config ([#5](https://github.com/ethanr-2000/ethanr.co.uk/pull/5))
+
+### 🩹 Fixes
+
+- dev environment setup ([#6](https://github.com/ethanr-2000/ethanr.co.uk/pull/6))
+- publish permissions ([#7](https://github.com/ethanr-2000/ethanr.co.uk/pull/7))
+- nx caching ([#8](https://github.com/ethanr-2000/ethanr.co.uk/pull/8))
+
+### 🏡 Chore
+
+- permissions ([#9](https://github.com/ethanr-2000/ethanr.co.uk/pull/9))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.3.1 (2025-02-08)
 
 ### 🩹 Fixes
