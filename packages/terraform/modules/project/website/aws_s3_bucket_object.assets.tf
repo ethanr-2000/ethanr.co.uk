@@ -1,8 +1,8 @@
 resource "aws_s3_object" "assets_current" {
   for_each = local.assets_file_paths
 
-  bucket = aws_s3_bucket.assets.bucket
-  key    = "current/website/${each.value}"
+  bucket = var.s3_bucket_name
+  key    = "current/${var.s3_path}/${each.value}"
   source = "${local.asset_root}/${each.value}"
 
   etag = filemd5("${local.asset_root}/${each.value}")
@@ -13,8 +13,8 @@ resource "aws_s3_object" "assets_current" {
 resource "aws_s3_object" "assets" {
   for_each = local.assets_file_paths
 
-  bucket = aws_s3_bucket.assets.bucket
-  key    = "${var.package_version}/website/${each.value}"
+  bucket = var.s3_bucket_name
+  key    = "${var.package_version}/${var.s3_path}/${each.value}"
   source = "${local.asset_root}/${each.value}"
 
   etag = filemd5("${local.asset_root}/${each.value}")

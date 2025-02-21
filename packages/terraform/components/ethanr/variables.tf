@@ -59,7 +59,3 @@ variable "fqdn" {
   default = "ethanr.uk"
 }
 
-variable "package_version" {
-  type        = string
-  description = "The version of ethanr.co.uk. E.g. 1.2.13" 
-}

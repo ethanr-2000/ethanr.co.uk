@@ -3,11 +3,14 @@ module "website" {
 
   aws = local.aws
 
-  fqdn                = var.fqdn
+  acm_certificate_arn = aws_acm_certificate.main.arn
   hosted_zone_id      = local.resolved_hosted_zone_id
-  ssl_certificate_arn = aws_acm_certificate.main.arn
-
-  package_version = var.package_version
+  fqdn                = var.fqdn
+  s3_path             = "website"
+  s3_bucket_name      = aws_s3_bucket.assets.bucket
+  s3_bucket_regional_domain_name = aws_s3_bucket.assets.bucket_regional_domain_name
+  s3_bucket_arn       = aws_s3_bucket.assets.arn
+  package_version     = local.package_version
 
   module_parents = []
 

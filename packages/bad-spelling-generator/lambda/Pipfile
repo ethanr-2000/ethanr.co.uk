@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pysle = "==2.3.0"
+regex = "==2022.10.31"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

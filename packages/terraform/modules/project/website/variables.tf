@@ -30,19 +30,40 @@ variable "unique_ids" {
 # Variables specific to this Module
 ##
 
-variable "ssl_certificate_arn" {
+variable "acm_certificate_arn" {
   type        = string
-  description = "The ARN of the SSL certificate for the website"
+  description = "The ARN of the ACM certificate"
+  
 }
 
 variable "hosted_zone_id" {
   type        = string
-  description = "The Route53 Hosted Zone ID for the website"
+  description = "The Route 53 hosted zone ID"
 }
 
-variable fqdn {
+variable "fqdn" {
   type        = string
-  description = "The fully qualified domain name for the website"
+  description = "The fully qualified domain name"
+}
+
+variable "s3_path" {
+  type        = string
+  description = "The path to the website assets in the S3 bucket"
+}
+
+variable "s3_bucket_name" {
+  type        = string
+  description = "The name of the assets S3 bucket"
+}
+
+variable "s3_bucket_regional_domain_name" {
+  type        = string
+  description = "The regional domain name of the assets S3 bucket"
+}
+
+variable "s3_bucket_arn" {
+  type        = string
+  description = "The ARN of the assets S3 bucket"
 }
 
 variable package_version {
