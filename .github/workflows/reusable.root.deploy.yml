@@ -105,6 +105,9 @@ jobs:
         key: ${{ runner.os }}-build-${{ github.sha }}
         fail-on-cache-miss: true
 
+    - name: Directory Structure
+      run: tree -ralp
+
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v1
       with:

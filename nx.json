@@ -3,11 +3,7 @@
   "defaultBase": "main",
   "targetDefaults": {
     "bundle": {
-      "cache": true,
-      "inputs": [
-        "{projectRoot}/build/**/*"
-      ],
-      "outputs": ["{workspaceRoot}/build"],
+      "cache": false,
       "dependsOn": ["build"]
     },
     "build": {
