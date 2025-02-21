@@ -8,9 +8,9 @@ isleDict = load_isle()
 pd = load_pronunciation_dictionary()
 
 def handler(event, context):
-  request = json.loads(event['body'])
+  text = event['queryStringParameters']['text']
 
-  words_list = re.findall(r"[\w']+|[.,!?; ]", request['text'])
+  words_list = re.findall(r"[\w']+|[.,!?; ]", text)
   response = {"words": []}
   for word in words_list:
       if re.match(r"[.,!?; ]", word):

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "bash pipeline-scripts/build.sh",
-    "bundle": "rimraf ../../../build/ethanr.co.uk-bsg-lambda && copyfiles -f ./build/ethanr.co.uk-bsg-lambda.zip ../../../build/ethanr.co.uk-bsg-lambda/ethanr.co.uk-bsg-lambda.zip",
+    "bundle": "rimraf ../../../build/ethanr.co.uk-bsg-lambda && copyfiles -u 1 \"./build/**/*\" ../../../build/ethanr.co.uk-bsg-lambda/",
     "test": "echo \"No test step for bsg\""
   },
   "dependencies": {

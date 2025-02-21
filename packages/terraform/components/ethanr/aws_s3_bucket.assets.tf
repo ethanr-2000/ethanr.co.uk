@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "assets" {
-  bucket = "${var.unique_ids.global}-assets"
+  bucket = "${local.unique_id_global}-assets"
 
   force_destroy = false
 

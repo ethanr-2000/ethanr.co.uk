@@ -29,7 +29,8 @@ function spellBad() {
     }
 
     let request = new XMLHttpRequest();
-    request.open("POST", 'https://api.badspellinggenerator.ethanr.co.uk/spellbad');
+    const currentDomain = window.location.origin;
+    request.open("GET", `${currentDomain}/api?text=${raw_input}`, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = (e) => {
         if (request.readyState === 4 && request.status === 200) {
@@ -55,7 +56,7 @@ function spellBad() {
             prepareHighlights(output, tooltips);
         }
     }
-    request.send(JSON.stringify({'text': raw_input}));
+    request.send();
 }
 
 function prepareHighlights(element, tooltips) {

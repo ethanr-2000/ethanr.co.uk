@@ -1,25 +1,22 @@
 #!/bin/bash
-# pipenv install --deploy --ignore-pipfile
+set -euo pipefail
 
-SITE_PACKAGES="$(pipenv --venv)/lib/site-packages/"
-BUILD_DIR=$(pwd)/build
+PROJECT_DIR="$PWD"
+BUILD_DIR="$PROJECT_DIR/build"
 
 # Clean up previous build
 pnpm rimraf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 
-# Copy the source code
-cd src
-zip -r9D $BUILD_DIR/ethanr.co.uk-bsg-lambda.zip "*"
+pipenv requirements > requirements.txt
+mv requirements.txt build/
 
-# Copy the dependencies
-cd $SITE_PACKAGES
-ls -l
-zip -r9 "$BUILD_DIR/ethanr.co.uk-bsg-lambda.zip" . \
-  -x "pip/*" \
-  -x "pip-*/**" \
-  -x "setuptools/*" \
-  -x "wheel/*" \
-  -x "wheel-*/**" \
-  -x "*/__pycache__/*" \
-  -x "*.dist-info/*"
+# Copy source code
+pnpm copyfiles -u 1 "src/**/*" "$BUILD_DIR"
+
+pip install \
+    --platform manylinux2014_x86_64 \
+    --target "$BUILD_DIR" \
+    --implementation cp \
+    --only-binary=:all: --upgrade \
+    -r "$BUILD_DIR/requirements.txt"

@@ -68,15 +68,6 @@ jobs:
         role-to-assume: arn:aws:iam::197239729734:role/TerraformExecution
         aws-region: eu-west-2
 
-    - name: Show Directory Structure
-      run: tree -ra
-
-    - name: Set Package Version In Env
-      working-directory: ./build/ethanr.co.uk-terraform
-      run: |
-        ENV_FILE=./etc/env_${{ inputs.aws-region }}_${{ inputs.environment }}.tfvars
-        echo "package_version = \"${{ inputs.tag-version }}\"" >> $ENV_FILE
-
     - name: Plan
       env:
         REGION: ${{ inputs.aws-region }}
@@ -98,6 +89,9 @@ jobs:
 
   apply:
     name: Apply
+    needs: plan
+    # Ensure apply is run after plan, even if it was conditionally skipped
+    if: ${{ !cancelled() && !failure() && (needs.plan.result == 'success' || needs.plan.result == 'skipped') }} 
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     permissions:
@@ -122,15 +116,6 @@ jobs:
         role-to-assume: arn:aws:iam::197239729734:role/TerraformExecution
         aws-region: eu-west-2
 
-    - name: Show Directory Structure
-      run: tree -ra
-
-    - name: Set Package Version In Env
-      working-directory: ./build/ethanr.co.uk-terraform
-      run: |
-        ENV_FILE=./etc/env_${{ inputs.aws-region }}_${{ inputs.environment }}.tfvars
-        echo "package_version = \"${{ inputs.tag-version }}\"" >> $ENV_FILE
-        
     - name: Apply
       env:
         REGION: ${{ inputs.aws-region }}

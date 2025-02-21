@@ -3,6 +3,3 @@ fqdn = "dev.ethanr.uk"
 
 # ethanr.uk hosted zone (-g main -e prod -c ethanr)
 hosted_zone_id = "Z08670401Y4LDRQ8NP9MF"
-
-# Uncomment and set to appropriate version for local deployment
-# package_version = "x.x.x"

@@ -21,7 +21,7 @@ def phone_to_syllable_list(phone):
 
 def load_english_words():
     words = []
-    with open(data_folder + 'english3.txt') as f:
+    with open(data_folder + 'english3.txt', "r", encoding="utf-8") as f:
         for word in f.readlines():
             words.append(word.strip('\n'))
     return words
@@ -29,7 +29,7 @@ def load_english_words():
 
 def load_symbol_table():
     symbol_table = {}
-    with open(data_folder + 'symbol_table.txt') as f:
+    with open(data_folder + 'symbol_table.txt', "r", encoding="utf-8") as f:
         for sound in f.readlines():
             sound = sound.strip('\n')
             l, pronunciation = sound.split('\t')[:2]

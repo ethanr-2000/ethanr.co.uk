@@ -13,7 +13,10 @@ data "aws_iam_policy_document" "assets_oac" {
     condition {
       test     = "StringEquals"
       variable = "AWS:SourceArn"
-      values   = [aws_cloudfront_distribution.main.arn]
+      values   = [
+        module.website.cloudfront_arn,
+        module.bad-spelling-generator.cloudfront_arn,
+      ]
     }
   }
 }
