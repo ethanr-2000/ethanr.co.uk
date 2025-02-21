@@ -1,3 +1,17 @@
+## 0.5.0 (2025-02-21)
+
+### 🚀 Features
+
+- bad spelling generator ([#16](https://github.com/ethanr-2000/ethanr.co.uk/pull/16))
+
+### 🏡 Chore
+
+- plan on cd ([#15](https://github.com/ethanr-2000/ethanr.co.uk/pull/15))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.4.5 (2025-02-15)
 
 ### 🩹 Fixes
