@@ -1,6 +1,6 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk-website",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "scripts": {
     "start": "vite",
     "build": "vite build",

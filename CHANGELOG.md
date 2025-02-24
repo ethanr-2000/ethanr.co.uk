@@ -1,3 +1,13 @@
+## 0.6.1 (2025-02-24)
+
+### 🩹 Fixes
+
+- get env name ([#18](https://github.com/ethanr-2000/ethanr.co.uk/pull/18))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.6.0 (2025-02-24)
 
 ### 🚀 Features
