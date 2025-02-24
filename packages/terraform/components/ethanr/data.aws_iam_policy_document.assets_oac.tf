@@ -16,6 +16,7 @@ data "aws_iam_policy_document" "assets_oac" {
       values   = [
         module.website.cloudfront_arn,
         module.bad-spelling-generator.cloudfront_arn,
+        module.mario_kart_tournament_scheduler.cloudfront_arn,
       ]
     }
   }
