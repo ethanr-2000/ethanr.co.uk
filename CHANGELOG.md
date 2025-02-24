@@ -1,3 +1,13 @@
+## 0.6.2 (2025-02-24)
+
+### 🩹 Fixes
+
+- delete feature artifacts ([#19](https://github.com/ethanr-2000/ethanr.co.uk/pull/19))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.6.1 (2025-02-24)
 
 ### 🩹 Fixes
