@@ -5,6 +5,9 @@ on:
     types: [closed]
 
 jobs:
+  get-env-name:
+    uses: './.github/workflows/reusable.root.get-env-name.yml'
+
   build-publish:
     if: '${{ github.event.pull_request.merged }}'
     name: 'Build & Publish'
@@ -32,10 +35,14 @@ jobs:
 
   delete-artifacts:
     name: 'Delete Feature Artifacts'
-    needs: build-publish
+    needs: 
+      - 'build-publish'
+      - 'get-env-name'
+    uses: './.github/workflows/reusable.root.delete-feature-artifacts.yml'
     secrets: inherit
     permissions:
       id-token: write
       packages: write
-    uses: './.github/workflows/reusable.root.delete-feature-artifacts.yml'
+    with:
+      env-name: ${{ needs.get-env-name.outputs.env-name }}
     

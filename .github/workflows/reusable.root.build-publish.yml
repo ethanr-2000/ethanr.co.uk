@@ -1,6 +1,12 @@
 on:
   workflow_call:
     inputs:
+      env-name:
+        description: 'Env name to tag feature artifacts'
+        required: false
+        default: ''
+        type: string
+
       prerelease:
         description: 'Create a pre-release'
         required: false
@@ -88,21 +94,28 @@ jobs:
 
     - name: Release
       id: release
+      uses: actions/github-script@v7
       env:
         SHA: ${{ env.SHA }}
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         NODE_AUTH_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-      uses: actions/github-script@v7
+        ENV_NAME: ${{ inputs.env-name }}
       with:
         github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         script: |
           const { release, releaseChangelog, releasePublish, releaseVersion } = require('nx/release');
 
+          const ENV_NAME = process.env.ENV_NAME;
           const SHA = process.env.SHA;
           const prerelease = ${{ inputs.prerelease }};
 
           if (prerelease) {
+            if (!ENV_NAME) {
+              console.log('No ENV_NAME');
+              process.exit(1);
+            }
+
             console.log('Creating pre-release');
 
             const { workspaceVersion, projectsVersionData } = await releaseVersion({ dryRun: true, verbose: true });
@@ -114,7 +127,7 @@ jobs:
               return;
             }
 
-            const prereleaseVersion = workspaceVersion + '-' + SHA;
+            const prereleaseVersion = workspaceVersion + '-' + ENV_NAME + '-' + SHA;
             console.log('Using Prerelease Version:', prereleaseVersion);
 
             for (const key in projectsVersionData) {

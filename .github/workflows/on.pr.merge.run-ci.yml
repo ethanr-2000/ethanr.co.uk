@@ -5,8 +5,13 @@ on:
     types: [opened, synchronize, reopened, edited, ready_for_review]
 
 jobs:
+  get-env-name:
+    uses: './.github/workflows/reusable.root.get-env-name.yml'
+
   build-publish:
     name: 'Build & Publish'
+    needs: 
+      - 'get-env-name'
     uses: './.github/workflows/reusable.root.build-publish.yml'
     secrets: inherit
     permissions:
@@ -14,11 +19,13 @@ jobs:
       contents: write
       packages: write
     with:
+      env-name: ${{ needs.get-env-name.outputs.env-name }}
       prerelease: true
 
   deploy:
     name: 'Deploy'
-    needs: build-publish
+    needs: 
+      - 'build-publish'
     if: ${{ needs.build-publish.outputs.tag-version }}
     uses: './.github/workflows/reusable.root.deploy.yml'
     with:

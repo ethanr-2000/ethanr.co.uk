@@ -1,0 +1,20 @@
+on:
+  workflow_call:
+    outputs:
+      env-name:
+        description: 'Env Name'
+        value: ${{ jobs.get-env-name.outputs.env-name }}
+
+jobs:
+  get-env-name:
+    runs-on: ubuntu-latest
+    outputs:
+      env-name: ${{ steps.get-env-name.outputs.env-name }}
+    steps:
+      - name: Get environment name
+        id: get-env-name
+        run: |
+          set -x
+          BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+          ENV_NAME=${BRANCH_NAME:0:7}
+          echo "env-name=${ENV_NAME}" >> $GITHUB_OUTPUT
