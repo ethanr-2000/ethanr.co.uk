@@ -1,3 +1,13 @@
+## 0.6.3 (2025-02-24)
+
+### 🩹 Fixes
+
+- delete fixes ([#20](https://github.com/ethanr-2000/ethanr.co.uk/pull/20))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.6.2 (2025-02-24)
 
 ### 🩹 Fixes
