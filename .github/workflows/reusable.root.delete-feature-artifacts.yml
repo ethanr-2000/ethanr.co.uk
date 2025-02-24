@@ -65,6 +65,7 @@ jobs:
           }
 
           async function deletePackage(packageName, envName) {
+            console.log(`Deleting ${packageName} versions that include ${envName}`);
             const matchingPackages = await github.rest.packages.getAllPackageVersionsForPackageOwnedByAuthenticatedUser({
               package_type: 'npm',
               package_name: packageName,
@@ -88,20 +89,15 @@ jobs:
             });
           }
 
-          const { workspaceVersion, projectsVersionData } = await releaseVersion({ dryRun: true });
-          console.log({ workspaceVersion, projectsVersionData });
-          if (!workspaceVersion) {
-            console.log('No new version');
-            process.exit(0);
-          }
+          const { projectsVersionData } = await releaseVersion({ dryRun: true });
+          console.log({ projectsVersionData });
 
-          const deletePromises = Object.entries(projectsVersionData).map(async ([key, value]) => {
+          const deletePromises = Object.keys(projectsVersionData).map(async (key) => {
             if (key.includes('/')) {
               // Do not include the scope e.g. @ethanr-2000/ethanr.co.uk => ethanr.co.uk
               key = key.split('/')[1];
             }
-            console.log(`Deleting ${key} versions that include ${ENV_NAME}`);
-            return deletePackage(key, value.newVersion);
+            return deletePackage(key, ENV_NAME);
           });
 
           await Promise.all(deletePromises);
