@@ -17,5 +17,5 @@ jobs:
           set -x
           BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
           BRANCH_NAME_TRIMMED=${BRANCH_NAME//[^a-zA-Z0-9]/}
-          ENV_NAME=${BRANCH_NAME:0:7}
+          ENV_NAME=${BRANCH_NAME_TRIMMED:0:7}
           echo "env-name=${ENV_NAME}" >> $GITHUB_OUTPUT
