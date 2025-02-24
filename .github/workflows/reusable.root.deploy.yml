@@ -44,7 +44,7 @@ on:
 jobs:
   plan:
     name: Plan
-    if: ${{ inputs.plan == 'true' }}
+    if: ${{ inputs.plan }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
