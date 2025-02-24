@@ -1,3 +1,13 @@
+## 0.6.0 (2025-02-24)
+
+### 🚀 Features
+
+- mario kart tournament scheduler ([#17](https://github.com/ethanr-2000/ethanr.co.uk/pull/17))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.5.0 (2025-02-21)
 
 ### 🚀 Features

@@ -1,6 +1,6 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk-bsg-lambda",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "scripts": {
     "build": "bash pipeline-scripts/build.sh",
     "bundle": "rimraf ../../../build/ethanr.co.uk-bsg-lambda && copyfiles -u 1 \"./build/**/*\" ../../../build/ethanr.co.uk-bsg-lambda/",
