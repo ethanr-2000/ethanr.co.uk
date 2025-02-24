@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "main" {
-  function_name = "${local.unique_id}"
+  function_name = local.unique_id
   description   = "Bad Spelling Generator Lambda"
   runtime       = "python3.11"
   handler       = "index.handler"
