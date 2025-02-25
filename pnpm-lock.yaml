@@ -156,9 +156,6 @@ importers:
       react-bootstrap-icons:
         specifier: ^1.11.5
         version: 1.11.5(react@19.0.0)
-      react-csv:
-        specifier: ^2.0.3
-        version: 2.2.2
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
