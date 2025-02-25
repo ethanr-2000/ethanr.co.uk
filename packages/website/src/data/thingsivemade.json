@@ -1,11 +1,7 @@
 [
   {
-    "title": "World's Worst URL Shortener",
-    "link": "https://url.ethanr.uk"
-  },
-  {
     "title": "Bad Spelling Generator",
-    "link": "https://bad-spelling-generator.ethanr.uk/"
+    "link": "https://bad-spelling-generator.ethanr.uk"
   },
   {
     "title": "SuzeBakes",
@@ -13,6 +9,6 @@
   },
   {
     "title": "Mario Kart Tournament Scheduler",
-    "link": "https://mkts.ethanr.uk"
+    "link": "https://mario-kart-tournament-scheduler.ethanr.uk"
   }
 ]

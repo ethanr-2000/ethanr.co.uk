@@ -3,7 +3,7 @@
   "title": "Tracking Dyson’s Public Image Using 46,166 Tweets",
   "subtitle": "A Lesson In Google Natural Language API and BigQuery",
   "date": "Sep 30, 2020",
-  "link": "https://towardsdatascience.com/tracking-dysons-public-image-using-46-166-tweets-68af509923a6"
+  "link": "https://medium.com/towards-data-science/tracking-dysons-public-image-using-46-166-tweets-68af509923a6"
 },
 {
   "title": "How My Deep Frying Messenger Bot Works",
@@ -21,19 +21,19 @@
   "title": "The Easiest Way to Run Python In Google Cloud (Illustrated)",
   "subtitle": "Everything you need to know to get started hosting your projects in Google Cloud for free",
   "date": "Nov 29, 2020",
-  "link": "https://towardsdatascience.com/the-easiest-way-to-run-python-in-google-cloud-illustrated-d307c9e1651c"
+  "link": "https://medium.com/towards-data-science/the-easiest-way-to-run-python-in-google-cloud-illustrated-d307c9e1651c"
 },
 {
   "title": "I Forced An AI To Read 80 Tim Denning Articles And It’s Now A Bad Inspirational Quote Machine",
   "subtitle": "Here are the highlights",
   "date": "Dec 4, 2020",
-  "link": "https://towardsdatascience.com/i-forced-an-ai-to-read-80-tim-denning-articles-and-its-now-a-bad-inspirational-quote-machine-ea9805d73ddc"
+  "link": "https://medium.com/towards-data-science/i-forced-an-ai-to-read-80-tim-denning-articles-and-its-now-a-bad-inspirational-quote-machine-ea9805d73ddc"
 },
 {
   "title": "English Spelling Is Even Worse Than You Thought",
   "subtitle": "An Analysis of the Spelling and Pronunciations of Over 80 Thousand Words",
   "date": "Jan 11, 2021",
-  "link": "https://towardsdatascience.com/english-spelling-is-even-worse-than-you-thought-284047e5f1d6"
+  "link": "https://medium.com/towards-data-science/english-spelling-is-even-worse-than-you-thought-284047e5f1d6"
 },
 {
   "title": "How Password Manager Cryptography Keeps Your Data Safe",
@@ -57,6 +57,6 @@
   "title": "Making My Own URL Shortener From Scratch",
   "subtitle": "With a twist… it’s terrible on purpose",
   "date": "Jan 10, 2022",
-  "link": "https://ethanr2000.medium.com/making-my-own-url-shortener-from-scratch-c5bc962feec1"
+  "link": "https://awstip.com/making-my-own-url-shortener-from-scratch-c5bc962feec1"
 }
 ]
