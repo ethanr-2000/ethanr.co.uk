@@ -1,3 +1,17 @@
+## 0.6.4 (2025-02-25)
+
+### 🩹 Fixes
+
+- ethanr build ([#22](https://github.com/ethanr-2000/ethanr.co.uk/pull/22))
+
+### 🏡 Chore
+
+- whoops ([#21](https://github.com/ethanr-2000/ethanr.co.uk/pull/21))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.6.3 (2025-02-24)
 
 ### 🩹 Fixes
