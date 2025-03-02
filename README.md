@@ -1,7 +1,6 @@
 <a id="readme-top"></a>
 
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?style=for-the-badge)](https://ethanr.uk)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ethanr-2000/ethanr.co.uk/on.pr.merge.run-cd.yml?branch=main&style=for-the-badge)
 ![GitHub Release](https://img.shields.io/github/v/release/ethanr-2000/ethanr.co.uk?style=for-the-badge)
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -53,12 +52,10 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
+This is the monorepo for `ethanr.uk` (formerly `ethanr.co.uk`), containing the source code for the main site, sub-projects and infrastructure-as-code for deploying to AWS.
 
 ### Built With
 
@@ -67,8 +64,6 @@
 [![pnpm](https://img.shields.io/badge/pnpm-F69220?logo=pnpm&logoColor=fff&style=for-the-badge)](#) ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 
 ## Getting Started
-
-The best way to get started is to build and bundle the project.
 
 ### Prerequisites
 
@@ -104,7 +99,6 @@ This is an example of how to list things you need to use the software and how to
    pnpm bundle
    ```
 
-
 ### Deployment
 
 If you have an AWS account [with a registered domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html), this project can be deployed to AWS by following the instructions below.
@@ -138,6 +132,36 @@ Optionally, you can deploy a dev environment.
   ```sh
   packages/terraform/bin/terraform.sh -t -r eu-west-2 -p er -g main -e dev -c ethanr -a apply
   ```
+
+### NX Cloud
+
+This project uses NX to orchestrate releases and cache lint/test/build processes. It is also set up to use NX Cloud. If you have forked this repository, you can configure an NX Cloud organisation to take advantage of this caching in the GitHub Actions workflows.
+
+1. Set up a free NX cloud organisation: https://nx.dev/ci/intro/ci-with-nx
+1. Configure NX with your forked repository: https://nx.dev/ci/intro/tutorials/github-actions#connect-to-nx-cloud
+
+### Automation
+
+This project comes with a complete set of GitHub actions workflows for automatically linting, testing, building, deploying and releasing the project. These can be used if you have forked this repository.
+
+* When a PR to master is raised:
+  * Lint, test, build
+  * Create pre-release packages
+  * Deploy the version to `dev` environment
+* When a PR to master is closed:
+  * Clean up feature versions
+  * If the PR was merged:
+  * Lint, test, build
+  * Create release packages
+  * Create GitHub release
+  * Plan changes to `prod`
+  * Following a manual approval, deploy the version to `prod`
+
+The workflows require the following repository secrets to be set:
+
+* `AWS_ACCOUNT_NUMBER`
+* `NX_CLOUD_ACCESS_TOKEN`: The access token for your NX cloud project
+* `WORKFLOW_GITHUB_TOKEN`: A classic GitHub token with permissions to commit directly to main, publish and delete packages and create releases.
 
 
 ## License
