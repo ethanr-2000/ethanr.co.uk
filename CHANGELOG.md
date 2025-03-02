@@ -1,3 +1,17 @@
+## 0.6.6 (2025-03-02)
+
+### 🩹 Fixes
+
+- blogs wip ([#25](https://github.com/ethanr-2000/ethanr.co.uk/pull/25))
+
+### 🏡 Chore
+
+- docs ([#24](https://github.com/ethanr-2000/ethanr.co.uk/pull/24))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.6.5 (2025-02-25)
 
 ### 🩹 Fixes
