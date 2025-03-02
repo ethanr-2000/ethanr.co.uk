@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react"
 import { useParams } from 'react-router-dom';
 import Container from "react-bootstrap/cjs/Container";
 
-
-
 function BlogPage() {
   const { blogId } = useParams();
   const [blogContent, setBlogContent] = useState('');
