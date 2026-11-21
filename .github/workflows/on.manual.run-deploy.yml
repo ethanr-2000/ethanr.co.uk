@@ -1,0 +1,38 @@
+# Builds and deploys the branch or tag picked in "Use workflow from", without releasing
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        type: choice
+        options: [dev, prod]
+        default: dev
+
+jobs:
+  build:
+    name: 'Build'
+    uses: './.github/workflows/reusable.root.build-publish.yml'
+    secrets: inherit
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
+    with:
+      release: false
+
+  deploy:
+    name: 'Deploy'
+    needs: build
+    uses: './.github/workflows/reusable.root.deploy.yml'
+    concurrency: deploy-${{ inputs.environment }}
+    secrets: inherit
+    with:
+      tag-version: ${{ github.ref_name }}
+      terraform-version: 1.17.2
+      aws-region: eu-west-2
+      project: er
+      component: ethanr
+      group: main
+      environment: ${{ inputs.environment }}

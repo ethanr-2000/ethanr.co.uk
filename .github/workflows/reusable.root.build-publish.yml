@@ -13,6 +13,12 @@ on:
         default: false
         type: boolean
 
+      release:
+        description: 'Version, publish and release. False only builds'
+        required: false
+        default: true
+        type: boolean
+
     outputs:
       tag-version:
         description: 'Tag version built e.g. v1.0.0-foo'
@@ -30,17 +36,17 @@ jobs:
       packages: write
     steps:
     - name: Install pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@v6
       with:
         version: 10.4.0
 
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         fetch-depth: 0
     
     - name: Install Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v7
       with:
         python-version: '3.11'
 
@@ -48,7 +54,7 @@ jobs:
       run: pip install pipenv
 
     - name: Install Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
         node-version: 22
         registry-url: 'https://npm.pkg.github.com'
@@ -57,7 +63,7 @@ jobs:
       run: echo "PNPM_STORE=$(pnpm store path)" >> $GITHUB_ENV
 
     - name: PNPM Cache
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: ${{ env.PNPM_STORE }}
         key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
@@ -76,7 +82,7 @@ jobs:
       run: pnpm bundle
 
     - name: Upload Build
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: build
         path: build
@@ -97,7 +103,8 @@ jobs:
 
     - name: Release
       id: release
-      uses: actions/github-script@v7
+      if: ${{ inputs.release }}
+      uses: actions/github-script@v8
       env:
         SHA: ${{ env.SHA }}
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
