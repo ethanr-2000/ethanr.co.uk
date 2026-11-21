@@ -1,3 +1,13 @@
+## 0.7.1 (2026-11-21)
+
+### 🩹 Fixes
+
+- **ci:** fail the pre-release when publishing packages fails ([#27](https://github.com/ethanr-2000/ethanr.co.uk/pull/27))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.7.0 (2026-11-21)
 
 ### 🚀 Features
