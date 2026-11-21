@@ -36,9 +36,9 @@ variable "acm_certificate_arn" {
   
 }
 
-variable "hosted_zone_id" {
+variable "cloudflare_zone_id" {
   type        = string
-  description = "The Route 53 hosted zone ID"
+  description = "The Cloudflare zone ID"
 }
 
 variable "fqdn" {

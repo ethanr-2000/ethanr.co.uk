@@ -47,15 +47,20 @@ variable "default_tags" {
 # Variables specific to the "ethanr" Component
 ##
 
-variable "hosted_zone_id" {
+variable "cloudflare_zone_id" {
   type        = string
-  description = "The Route53 Hosted Zone ID. Leave blank to create"
-  default     = ""
+  description = "The Cloudflare zone ID for the site's domain"
+}
+
+variable "manage_dns_zone" {
+  type        = bool
+  description = "Whether this environment manages zone-wide DNS settings. Only one environment should"
+  default     = false
 }
 
 variable "fqdn" {
   type        = string
   description = "The FQDN of the website"
-  default = "ethanr.uk"
+  default     = "ethanr.co.uk"
 }
 

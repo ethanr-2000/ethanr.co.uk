@@ -1,6 +1,6 @@
 <a id="readme-top"></a>
 
-[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?style=for-the-badge)](https://ethanr.uk)
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?style=for-the-badge)](https://ethanr.co.uk)
 ![GitHub Release](https://img.shields.io/github/v/release/ethanr-2000/ethanr.co.uk?style=for-the-badge)
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -16,7 +16,7 @@
     <img src="packages/website/public/favicon.ico" alt="Logo" width="40">
   </a>
 
-<h3 align="center">ethanr.uk</h3>
+<h3 align="center">ethanr.co.uk</h3>
 
   <p align="center">
 
@@ -55,7 +55,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is the monorepo for `ethanr.uk` (formerly `ethanr.co.uk`), containing the source code for the main site, sub-projects and infrastructure-as-code for deploying to AWS.
+This is the monorepo for `ethanr.co.uk`, containing the source code for the main site, sub-projects and infrastructure-as-code for deploying to AWS, with DNS on Cloudflare.
 
 ### Built With
 

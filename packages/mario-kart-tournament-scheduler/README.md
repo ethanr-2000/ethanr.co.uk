@@ -1,5 +1,5 @@
 # Mario Kart Tournament Scheduler
-[See it live here](https://mkts.ethanr.uk)
+[See it live here](https://mario-kart-tournament-scheduler.ethanr.co.uk)
 
 A simple web app that schedules a Mario Kart (or other game) tournament from a list of names,
 in an effort to be short, while being as fair as possible.
