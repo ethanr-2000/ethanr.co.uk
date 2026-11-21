@@ -10,25 +10,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3",
-    "react": "^19.0.0",
-    "react-bootstrap": "^2.10.9",
-    "react-bootstrap-icons": "^1.11.5",
-    "react-csv": "^2.0.3",
-    "react-dom": "^19.0.0",
-    "react-router": "^7.1.5",
-    "react-router-dom": "^7.1.5",
-    "ts-node": "^10.9.1",
-    "web-vitals": "^4.2.4"
+    "bootstrap": "^5.3.9",
+    "bootstrap-icons": "^1.13.2",
+    "react": "^19.3.1",
+    "react-bootstrap": "^2.10.10",
+    "react-bootstrap-icons": "^1.11.6",
+    "react-csv": "^2.2.2",
+    "react-dom": "^19.3.1",
+    "react-router": "^8.5.2",
+    "ts-node": "^10.9.2",
+    "web-vitals": "^6.2.3"
   },
   "devDependencies": {
-    "vite": "^6.1.1",
-    "vitest": "^3.0.7",
-    "@vitejs/plugin-react": "^4.3.4",
-    "@vitest/coverage-v8": "3.0.7",
+    "@vitejs/plugin-react": "^6.3.0",
+    "@vitest/coverage-v8": "5.1.1",
     "copyfiles": "^2.4.1",
-    "rimraf": "^3.0.2"
+    "rimraf": "^6.1.4",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
   },
   "browserslist": {
     "production": [
@@ -42,7 +41,7 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "pnpm@10.4.0+sha512.6b849d0787d97f8f4e1f03a9b8ff8f038e79e153d6f11ae539ae7c435ff9e796df6a862c991502695c7f9e8fac8aeafc1ac5a8dab47e36148d183832d886dd52",
+  "packageManager": "pnpm@12.21.0",
   "nx": {},
   "repository": {
     "type": "git",

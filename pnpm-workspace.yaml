@@ -2,3 +2,11 @@ packages:
   - '*'
   - 'packages/*'
   - 'packages/bad-spelling-generator/*'
+
+gitChecks: false
+linkWorkspacePackages: true
+
+# Dependencies allowed to run install scripts
+allowBuilds:
+  '@swc/core': true
+  nx: true

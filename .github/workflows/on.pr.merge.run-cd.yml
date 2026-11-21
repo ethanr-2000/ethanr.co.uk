@@ -23,10 +23,11 @@ jobs:
     needs: build-publish
     if: ${{ needs.build-publish.outputs.tag-version }}
     uses: './.github/workflows/reusable.root.deploy.yml'
+    concurrency: deploy-prod
     secrets: inherit
     with:
       tag-version: ${{ needs.build-publish.outputs.tag-version }}
-      terraform-version: 1.10.5
+      terraform-version: 1.17.2
       aws-region: eu-west-2
       project: er
       component: ethanr
