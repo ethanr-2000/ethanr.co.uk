@@ -3,8 +3,8 @@ module "mario_kart_tournament_scheduler" {
 
   aws = local.aws
 
-  acm_certificate_arn            = aws_acm_certificate.main.arn
-  hosted_zone_id                 = local.resolved_hosted_zone_id
+  acm_certificate_arn            = aws_acm_certificate_validation.main.certificate_arn
+  cloudflare_zone_id             = var.cloudflare_zone_id
   fqdn                           = "mario-kart-tournament-scheduler.${var.fqdn}"
   s3_path                        = "mkts"
   s3_bucket_name                 = aws_s3_bucket.assets.bucket

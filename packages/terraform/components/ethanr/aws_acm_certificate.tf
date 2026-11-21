@@ -9,4 +9,9 @@ resource "aws_acm_certificate" "main" {
   ]
 
   tags = local.default_tags
+
+  # CloudFront still uses the old certificate until the new one replaces it
+  lifecycle {
+    create_before_destroy = true
+  }
 }
