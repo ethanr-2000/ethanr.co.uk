@@ -29,12 +29,6 @@ jobs:
       contents: write
       packages: write
     steps:
-    - name: Build Cache
-      uses: actions/cache@v4
-      with:
-        path: build
-        key: ${{ runner.os }}-build-${{ github.sha }}
-
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
@@ -80,6 +74,17 @@ jobs:
       env:
         NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
       run: pnpm bundle
+
+    # Hands the bundle to the deploy jobs. An artifact rather than the cache, because
+    # runs triggered by merging a PR only get read access to the Actions cache
+    - name: Upload Build
+      uses: actions/upload-artifact@v4
+      with:
+        name: build
+        path: build
+        include-hidden-files: true
+        if-no-files-found: error
+        retention-days: 1
 
     - name: Configure Git Author
       run: |

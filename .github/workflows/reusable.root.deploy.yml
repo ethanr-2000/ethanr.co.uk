@@ -55,12 +55,11 @@ jobs:
       id-token: write
       contents: read
     steps:
-    - name: Restore Build Cache
-      uses: actions/cache/restore@v4
+    - name: Download Build
+      uses: actions/download-artifact@v4
       with:
+        name: build
         path: build
-        key: ${{ runner.os }}-build-${{ github.sha }}
-        fail-on-cache-miss: true
 
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v1
@@ -104,12 +103,11 @@ jobs:
       id-token: write
       contents: read
     steps:
-    - name: Restore Build Cache
-      uses: actions/cache/restore@v4
+    - name: Download Build
+      uses: actions/download-artifact@v4
       with:
+        name: build
         path: build
-        key: ${{ runner.os }}-build-${{ github.sha }}
-        fail-on-cache-miss: true
 
     - name: Directory Structure
       run: tree -ralp
