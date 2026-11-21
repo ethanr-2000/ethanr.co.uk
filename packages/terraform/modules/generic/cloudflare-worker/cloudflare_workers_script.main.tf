@@ -12,6 +12,7 @@ resource "cloudflare_workers_script" "main" {
     directory = var.assets_directory
     config = {
       not_found_handling = local.has_script ? null : var.not_found_handling
+      headers            = var.asset_headers
     }
   } : null
 

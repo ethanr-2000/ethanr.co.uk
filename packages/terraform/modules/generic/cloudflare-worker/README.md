@@ -9,6 +9,7 @@ Defaults:
 - Workers Logs are on.
 - An assets-only Worker serves `index.html` for paths that match no file, so client-side routes work.
 - Static files are served before the script runs, so a script only sees requests that match no file.
+- Static file responses get `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy` and `Permissions-Policy` headers (`asset_headers`). HSTS comes from the zone's settings.
 
 ## Static site
 
@@ -67,6 +68,7 @@ The Cloudflare API token needs Account → Workers Scripts → Edit and, for `ho
 | `hostname` | `null` | Custom domain; null for none |
 | `assets_directory` | `null` | Static files to upload |
 | `not_found_handling` | `single-page-application` | Assets-only Workers: `single-page-application`, `404-page` or `none` |
+| `asset_headers` | security headers | Headers for static file responses, `_headers` format; null for none |
 | `script_path` | `null` | Single-file ES module script |
 | `assets_binding_name` | `ASSETS` | Name of the static files binding when there is a script |
 | `plain_text_bindings` | `{}` | `env.<NAME>` plain text values |
