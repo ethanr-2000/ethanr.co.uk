@@ -48,6 +48,18 @@ variable "not_found_handling" {
   }
 }
 
+variable "asset_headers" {
+  type        = string
+  description = "Headers added to static file responses, in _headers file format. Null for none"
+  default     = <<-EOT
+    /*
+      X-Content-Type-Options: nosniff
+      X-Frame-Options: DENY
+      Referrer-Policy: strict-origin-when-cross-origin
+      Permissions-Policy: camera=(), microphone=(), geolocation=()
+  EOT
+}
+
 variable "script_path" {
   type        = string
   description = "Path to a single-file ES module Worker script. Null for an assets-only Worker"
