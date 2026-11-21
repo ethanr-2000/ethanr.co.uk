@@ -1,3 +1,13 @@
+## 0.9.0 (2026-11-21)
+
+### 🚀 Features
+
+- harden the zone and remove leftover AWS resources ([#30](https://github.com/ethanr-2000/ethanr.co.uk/pull/30))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.8.0 (2026-11-21)
 
 ### 🚀 Features
