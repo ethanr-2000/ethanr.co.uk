@@ -10,6 +10,7 @@ provider "aws" {
   }
 }
 
+# Only needed so this apply can delete the old ACM certificates. Remove afterwards
 provider "aws" {
   alias  = "us-east-1"
   region = "us-east-1"

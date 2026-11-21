@@ -47,6 +47,11 @@ variable "default_tags" {
 # Variables specific to the "ethanr" Component
 ##
 
+variable "cloudflare_account_id" {
+  type        = string
+  description = "The Cloudflare account ID"
+}
+
 variable "cloudflare_zone_id" {
   type        = string
   description = "The Cloudflare zone ID for the site's domain"
