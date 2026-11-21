@@ -147,10 +147,17 @@ jobs:
               verbose: true
             });
 
-            await releasePublish({
+            const publishResults = await releasePublish({
               verbose: true,
               tag: '${{ github.ref }}'
             });
+
+            // Fail here so a broken registry token shows up on the PR, not after merge
+            const failedProjects = Object.keys(publishResults).filter((project) => publishResults[project].code !== 0);
+            if (failedProjects.length > 0) {
+              core.setFailed('Failed to publish: ' + failedProjects.join(', '));
+              process.exit(1);
+            }
 
             core.setOutput('tag-version', prereleaseVersion);
           } else {
