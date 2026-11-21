@@ -1,3 +1,13 @@
+## 0.9.1 (2026-11-21)
+
+### 🩹 Fixes
+
+- tidy the pipeline and update Node, pnpm and all packages ([#31](https://github.com/ethanr-2000/ethanr.co.uk/pull/31))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.9.0 (2026-11-21)
 
 ### 🚀 Features
