@@ -1,6 +1,6 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk-bsg-site",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "scripts": {
     "build-dev": "webpack",
     "build": "pnpm build-dev -- --no-watch",
