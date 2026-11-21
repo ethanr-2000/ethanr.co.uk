@@ -30,10 +30,9 @@ variable "unique_ids" {
 # Variables specific to this Module
 ##
 
-variable "acm_certificate_arn" {
+variable "cloudflare_account_id" {
   type        = string
-  description = "The ARN of the ACM certificate"
-  
+  description = "The Cloudflare account ID"
 }
 
 variable "cloudflare_zone_id" {
@@ -44,29 +43,4 @@ variable "cloudflare_zone_id" {
 variable "fqdn" {
   type        = string
   description = "The fully qualified domain name"
-}
-
-variable "s3_path" {
-  type        = string
-  description = "The path to the website assets in the S3 bucket"
-}
-
-variable "s3_bucket_name" {
-  type        = string
-  description = "The name of the assets S3 bucket"
-}
-
-variable "s3_bucket_regional_domain_name" {
-  type        = string
-  description = "The regional domain name of the assets S3 bucket"
-}
-
-variable "s3_bucket_arn" {
-  type        = string
-  description = "The ARN of the assets S3 bucket"
-}
-
-variable package_version {
-  type        = string
-  description = "The version of the website. E.g. 1.2.13"
 }

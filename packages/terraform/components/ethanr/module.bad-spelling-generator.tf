@@ -3,14 +3,9 @@ module "bad-spelling-generator" {
 
   aws = local.aws
 
-  acm_certificate_arn            = aws_acm_certificate_validation.main.certificate_arn
-  cloudflare_zone_id             = var.cloudflare_zone_id
-  fqdn                           = "bad-spelling-generator.${var.fqdn}"
-  s3_path                        = "bsg"
-  s3_bucket_name                 = aws_s3_bucket.assets.bucket
-  s3_bucket_regional_domain_name = aws_s3_bucket.assets.bucket_regional_domain_name
-  s3_bucket_arn                  = aws_s3_bucket.assets.arn
-  package_version                = local.package_version
+  cloudflare_account_id = var.cloudflare_account_id
+  cloudflare_zone_id    = var.cloudflare_zone_id
+  fqdn                  = "bad-spelling-generator.${var.fqdn}"
 
   module_parents = []
 

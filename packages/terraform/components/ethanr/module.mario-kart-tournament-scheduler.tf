@@ -1,22 +1,12 @@
 module "mario_kart_tournament_scheduler" {
-  source = "../../modules/project/mario-kart-tournament-scheduler"
+  source = "../../modules/generic/cloudflare-worker"
 
-  aws = local.aws
-
-  acm_certificate_arn            = aws_acm_certificate_validation.main.certificate_arn
-  cloudflare_zone_id             = var.cloudflare_zone_id
-  fqdn                           = "mario-kart-tournament-scheduler.${var.fqdn}"
-  s3_path                        = "mkts"
-  s3_bucket_name                 = aws_s3_bucket.assets.bucket
-  s3_bucket_regional_domain_name = aws_s3_bucket.assets.bucket_regional_domain_name
-  s3_bucket_arn                  = aws_s3_bucket.assets.arn
-  package_version                = local.package_version
-
-  module_parents = []
+  account_id       = var.cloudflare_account_id
+  zone_id          = var.cloudflare_zone_id
+  hostname         = "mario-kart-tournament-scheduler.${var.fqdn}"
+  assets_directory = "${local.build_root}/ethanr.co.uk-mkts"
 
   unique_ids = {
-    local   = "${local.unique_id}-mkts"
-    account = "${local.unique_id_account}-mkts"
-    global  = "${local.unique_id_global}-mkts"
+    local = "${local.unique_id}-mkts"
   }
 }

@@ -1,4 +1,4 @@
 locals {
-  # get package version from package.json
-  package_version = jsondecode(file("${path.module}/../../package.json")).version
+  # Where the pipeline's bundle step puts each package's build output
+  build_root = "${path.module}/../../../../build"
 }
