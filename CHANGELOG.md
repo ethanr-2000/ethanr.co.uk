@@ -1,3 +1,13 @@
+## 0.7.2 (2026-11-21)
+
+### 🩹 Fixes
+
+- **ci:** pass the build to deploy jobs as an artifact ([#28](https://github.com/ethanr-2000/ethanr.co.uk/pull/28))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.7.1 (2026-11-21)
 
 ### 🩹 Fixes
