@@ -4,7 +4,9 @@
   "targetDefaults": {
     "bundle": {
       "cache": false,
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
     },
     "build": {
       "cache": true,
@@ -13,8 +15,12 @@
         "!{projectRoot}/build/**/*",
         "!{projectRoot}/coverage/**/*"
       ],
-      "outputs": ["{projectRoot}/build"],
-      "dependsOn": ["test"]
+      "outputs": [
+        "{projectRoot}/build"
+      ],
+      "dependsOn": [
+        "test"
+      ]
     },
     "test": {
       "cache": true,
@@ -22,17 +28,20 @@
         "{projectRoot}/**/*",
         "!{projectRoot}/build/**/*"
       ],
-      "outputs": ["{projectRoot}/coverage"]
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
     }
   },
   "release": {
-    "projects": ["*"],
+    "projects": [
+      "*"
+    ],
     "projectsRelationship": "fixed",
     "version": {
       "conventionalCommits": true,
-      "generatorOptions": {
-        "fallbackCurrentVersionResolver": "disk"
-      }
+      "fallbackCurrentVersionResolver": "disk",
+      "preserveLocalDependencyProtocols": false
     },
     "changelog": {
       "automaticFromRef": true,
@@ -65,5 +74,8 @@
         }
       }
     }
-  ]
+  ],
+  "affected": {
+    "legacy": true
+  }
 }

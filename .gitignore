@@ -26,3 +26,8 @@ yarn-error.log*
 .nx/workspace-data
 
 scratch/
+.claude/worktrees
+.claude/settings.local.json
+.nx/polygraph
+.nx/self-healing
+.nx/migrate-runs
