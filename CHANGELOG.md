@@ -1,3 +1,13 @@
+## 0.7.0 (2026-11-21)
+
+### 🚀 Features
+
+- move DNS to Cloudflare and switch the site to ethanr.co.uk ([#26](https://github.com/ethanr-2000/ethanr.co.uk/pull/26))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.6.6 (2025-03-02)
 
 ### 🩹 Fixes
