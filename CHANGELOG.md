@@ -1,3 +1,13 @@
+## 0.9.2 (2026-11-22)
+
+### 🚀 Features
+
+- make bad-spelling-generator a fully static site ([#32](https://github.com/ethanr-2000/ethanr.co.uk/pull/32))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.9.1 (2026-11-21)
 
 ### 🩹 Fixes
