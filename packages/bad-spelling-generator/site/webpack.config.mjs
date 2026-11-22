@@ -11,6 +11,10 @@ export default {
     extensions: [".js"],
   },
   mode: "production",
+  // The data files are fetched when needed rather than bundled, so only size-check JavaScript
+  performance: {
+    assetFilter: (file) => file.endsWith(".js"),
+  },
   watch: true,
   watchOptions: {
     ignored: [

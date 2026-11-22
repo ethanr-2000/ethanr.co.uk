@@ -16,72 +16,66 @@ function spellBadTimeCheck(event) {
 }
 
 function spellBad() {
-    let output = document.getElementById("output")
-    let raw_input = input.value;
+    const output = document.getElementById("output");
+    const text = input.value;
 
-    if (raw_input.length === 0) {
-        return setOutputPlaceholder(output)
+    if (text.length === 0) {
+        return setOutputPlaceholder(output);
     }
 
-    let placeholderSpan = document.querySelector('[data-tooltip="Hover over a word to see where the spelling comes from"]');
-    if (placeholderSpan) {
-        placeholderSpan.style.opacity = 0;
-        placeholderSpan.style.marginTop = 0;
-        output.innerHTML = '';
-    }
-
-    spellBadText(raw_input).then((res) => {
+    spellBadText(text).then((pieces) => {
         // A slower, older request can finish after a newer one
-        if (raw_input !== input.value) {
-            return;
+        if (text === input.value) {
+            showPieces(output, pieces);
         }
-        let tooltips = [];
-        output.innerHTML = '';
-        for (let i = 0; i < res.words.length; i++) {
-            output.innerHTML += res.words[i].badlySpelled.join('§');
-            if (res.words[i].badlySpelled.join('') === res.words[i].word) {
-                tooltips.push([res.words[i].word]);
-                continue;
-            }
-            if (res.words[i].syllableOrigins) {
-                let tooltip = [];
-                for (let j = 0; j < res.words[i].syllableOrigins.length; j++) {
-                    let sourceWord = res.words[i].syllableOrigins[j].word.join('');
-                    tooltip.push(sourceWord);
-                }
-                tooltips.push(tooltip);
-            }
+    }).catch((error) => {
+        console.error(error);
+        if (text === input.value) {
+            output.textContent = "Couldn't load the spelling data. Try typing again in a moment.";
+            output.style.color = '#777';
         }
-        output.style.color = '#000';
-        prepareHighlights(output, tooltips);
     });
 }
 
-function prepareHighlights(element, tooltips) {
-    let newHtml = '';
-    let words = element.innerHTML.split(' ');
-    for (let i = 0; i < words.length; i++) {
-        const word = words[i].split('§');
-        if (word[0] === "") {
-            continue;
+// One span per respelled syllable, with the word its spelling came from as a tooltip
+function showPieces(output, pieces) {
+    output.replaceChildren();
+    output.style.color = '#000';
+    for (const piece of pieces) {
+        if (piece.syllables === undefined) {
+            // #output is a flex container, so a newline needs its own full-width break
+            piece.text.split("\n").forEach((line, i) => {
+                if (i > 0) {
+                    output.append(lineBreak());
+                }
+                if (line) {
+                    output.append(span(line));
+                }
+            });
+        } else if (piece.syllables === null) {
+            output.append(span(piece.text, piece.text));
+        } else {
+            for (const { spelling, example } of piece.syllables) {
+                output.append(span(spelling, example));
+            }
         }
-        for (let j = 0; j < word.length; j++) {
-            newHtml += '<span class="word" data-tooltip="' + tooltips[i][j] + '">' + word[j] + '</span>';
-        }
-        newHtml += '<span> </span>';
     }
-    element.innerHTML = newHtml;
+}
 
-    let x = document.getElementsByClassName("word");
-    for (let i = 0; i < x.length; i++) {
-        x[i].addEventListener('mouseover', function() {
-            $(this).addClass('hlight');
-        });
+function lineBreak() {
+    const element = document.createElement("span");
+    element.className = "line-break";
+    return element;
+}
 
-        x[i].addEventListener('mouseout', function() {
-            $(this).removeClass('hlight');
-        });
+function span(text, tooltip) {
+    const element = document.createElement("span");
+    element.textContent = text;
+    if (tooltip !== undefined) {
+        element.className = "word";
+        element.dataset.tooltip = tooltip;
     }
+    return element;
 }
 
 function setOutputPlaceholder(div) {

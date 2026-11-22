@@ -65,7 +65,12 @@ h1 {
 	min-height: 8em;
 }
 
-.hlight {
+.line-break {
+	flex-basis: 100%;
+	height: 0;
+}
+
+.word:hover {
 	background-color: #ffe279;
 }
 

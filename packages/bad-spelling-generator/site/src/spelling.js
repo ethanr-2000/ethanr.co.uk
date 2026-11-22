@@ -1,68 +1,64 @@
-// Respells text in the browser using the data written by generator/src/generate.py.
-// Only the shards for the words typed (and their syllables) are fetched.
+// Respells text in the browser using the data written by generator/src/generate.py:
+// data/words/<first two letters>.json and data/syllables.json.
 
-const WORD_SHARDS = 256;
-const SYLLABLE_SHARDS = 64;
-const PUNCTUATION = /^[.,!?; ]$/;
+const files = new Map();
 
-const shards = new Map();
-
-// FNV-1a over code points: must match shard() in generate.py
-function shardIndex(key, count) {
-  let hash = 2166136261;
-  for (const ch of key) {
-    hash = Math.imul(hash ^ ch.codePointAt(0), 16777619) >>> 0;
-  }
-  return hash % count;
-}
-
-function lookup(kind, count, key) {
-  const url = `./data/${kind}/${shardIndex(key, count)}.json`;
-  if (!shards.has(url)) {
-    shards.set(url, fetch(url).then((response) => {
+function load(path) {
+  if (!files.has(path)) {
+    const request = fetch(path).then((response) => {
+      // No words file: no dictionary word starts with those two letters
+      if (response.status === 404) {
+        return {};
+      }
       if (!response.ok) {
-        shards.delete(url);
-        throw new Error(`Failed to load ${url}: ${response.status}`);
+        throw new Error(`Failed to load ${path}: ${response.status}`);
       }
       return response.json();
-    }));
+    });
+    // Forget failures, so the next lookup tries again
+    request.catch(() => files.delete(path));
+    files.set(path, request);
   }
-  return shards.get(url).then((entries) => entries[key]);
+  return files.get(path);
+}
+
+// Must match words_file() in generate.py
+function wordsFile(word) {
+  return Array.from(word).slice(0, 2).join("").replace(/[^a-z0-9]/g, "_");
+}
+
+// Only the file's own keys, so words like "__proto__" don't find Object's properties
+function get(entries, key) {
+  return Object.hasOwn(entries, key) ? entries[key] : undefined;
 }
 
 function pick(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
-async function spellBadWord(word) {
-  const result = { word, badlySpelled: [word], syllableOrigins: [] };
-
-  // An array of syllable sounds, 0 for a known word that can't be respelled,
-  // or undefined for a word that isn't in the dictionary
-  const syllables = await lookup("words", WORD_SHARDS, word.toLowerCase());
-  if (syllables === undefined) {
-    result.syllableOrigins = null;
-    return result;
+// A spelling and example word for each syllable, or null if the word can't be respelled
+async function respell(word) {
+  const key = word.toLowerCase();
+  const [words, sounds] = await Promise.all([
+    load(`./data/words/${wordsFile(key)}.json`),
+    load("./data/syllables.json"),
+  ]);
+  const syllables = get(words, key);
+  if (!syllables) {
+    return null;
   }
-  if (syllables === 0) {
-    return result;
-  }
-
-  const options = await Promise.all(syllables.map((s) => lookup("syllables", SYLLABLE_SHARDS, s)));
-  result.badlySpelled = [];
-  for (const spellings of options) {
-    const [spelling, examples] = pick(spellings);
-    result.badlySpelled.push(spelling);
-    result.syllableOrigins.push({ word: [pick(examples)] });
-  }
-  return result;
+  return syllables.map((sound) => {
+    const [spelling, examples] = pick(get(sounds, sound));
+    return { spelling, example: pick(examples) };
+  });
 }
 
-// Same response shape the old /api returned
-export async function spellBadText(text) {
-  const tokens = text.match(/[\p{L}\p{N}_']+|[.,!?; ]/gu) ?? [];
-  const words = await Promise.all(
-    tokens.map((token) => (PUNCTUATION.test(token) ? { badlySpelled: [token] } : spellBadWord(token))),
-  );
-  return { words };
+// Splits text into words and the text between them, in order. Words also get
+// `syllables`: what respell() returns for them.
+export function spellBadText(text) {
+  // With a capture group, split alternates: between, word, between, word, ...
+  const pieces = text.split(/([\p{L}\p{N}_']+)/u);
+  return Promise.all(pieces.map(async (piece, i) => (
+    i % 2 === 1 ? { text: piece, syllables: await respell(piece) } : { text: piece }
+  )));
 }
