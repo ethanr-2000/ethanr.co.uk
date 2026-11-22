@@ -11,6 +11,10 @@ export default {
     extensions: [".js"],
   },
   mode: "production",
+  // The data files are fetched when needed rather than bundled, so only size-check JavaScript
+  performance: {
+    assetFilter: (file) => file.endsWith(".js"),
+  },
   watch: true,
   watchOptions: {
     ignored: [
@@ -23,7 +27,8 @@ export default {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "src" },
+        // Static files and the generated data; the JavaScript is bundled instead
+        { from: "src", globOptions: { ignore: ["**/*.js"] } },
       ],
     }),
   ],

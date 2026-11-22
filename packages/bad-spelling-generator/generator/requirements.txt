@@ -1,0 +1,4 @@
+# For src/generate.py and dictionary-scripts. Versions the data was last generated with
+pysle==2.3.0
+regex==2026.11.19
+setuptools==80.10.2  # pysle 2.3.0 imports pkg_resources, which newer setuptools drops
