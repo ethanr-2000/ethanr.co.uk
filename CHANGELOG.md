@@ -1,3 +1,18 @@
+## 0.9.3 (2026-11-22)
+
+### 🩹 Fixes
+
+- load Open Sans and list blogs newest first ([#35](https://github.com/ethanr-2000/ethanr.co.uk/pull/35))
+
+### 🏡 Chore
+
+- add oxlint and oxfmt and format the repo ([#33](https://github.com/ethanr-2000/ethanr.co.uk/pull/33))
+- lint and check formatting before each commit ([#34](https://github.com/ethanr-2000/ethanr.co.uk/pull/34))
+
+### ❤️ Thank You
+
+- Ethan @ethanr-2000
+
 ## 0.9.2 (2026-11-22)
 
 ### 🚀 Features
