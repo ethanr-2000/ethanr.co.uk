@@ -1,5 +1,5 @@
 :root {
-  --common-font: Calibri;
+  --common-font: "Open Sans Variable", sans-serif;
 }
 
 body {
@@ -31,35 +31,29 @@ body {
 }
 
 h1 {
-  font-family: Courier, "Courier New", monospace;
   font-family: var(--common-font);
 }
 
 h3 {
-  font-family: Courier, "Courier New", monospace;
   font-family: var(--common-font);
   color: yellow !important;
 }
 
 h6 {
-  font-family: Courier, "Courier New", monospace;
   font-family: var(--common-font);
 }
 
 p {
-  font-family: Courier, "Courier New", monospace;
   font-family: var(--common-font);
   color: white;
 }
 
 code {
-  font-family: Courier, "Courier New", monospace;
   font-family: var(--common-font);
   color: yellow !important;
 }
 
 a {
-  font-family: Courier, "Courier New", monospace;
   font-family: var(--common-font);
 }
 
