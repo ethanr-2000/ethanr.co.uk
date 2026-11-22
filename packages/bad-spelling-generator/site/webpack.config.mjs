@@ -17,10 +17,7 @@ export default {
   },
   watch: true,
   watchOptions: {
-    ignored: [
-      "node_modules/",
-      "build/",
-    ],
+    ignored: ["node_modules/", "build/"],
     aggregateTimeout: 300, // Delay before rebuilding
     poll: 1000,
   },

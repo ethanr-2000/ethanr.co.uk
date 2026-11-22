@@ -2,7 +2,7 @@ on:
   workflow_call:
     outputs:
       env-name:
-        description: 'Env Name'
+        description: "Env Name"
         value: ${{ jobs.get-env-name.outputs.env-name }}
 
 jobs:

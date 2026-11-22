@@ -4,39 +4,22 @@
   "targetDefaults": {
     "bundle": {
       "cache": false,
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     },
     "build": {
       "cache": true,
-      "inputs": [
-        "{projectRoot}/**/*",
-        "!{projectRoot}/build/**/*",
-        "!{projectRoot}/coverage/**/*"
-      ],
-      "outputs": [
-        "{projectRoot}/build"
-      ],
-      "dependsOn": [
-        "test"
-      ]
+      "inputs": ["{projectRoot}/**/*", "!{projectRoot}/build/**/*", "!{projectRoot}/coverage/**/*"],
+      "outputs": ["{projectRoot}/build"],
+      "dependsOn": ["test"]
     },
     "test": {
       "cache": true,
-      "inputs": [
-        "{projectRoot}/**/*",
-        "!{projectRoot}/build/**/*"
-      ],
-      "outputs": [
-        "{projectRoot}/coverage"
-      ]
+      "inputs": ["{projectRoot}/**/*", "!{projectRoot}/build/**/*"],
+      "outputs": ["{projectRoot}/coverage"]
     }
   },
   "release": {
-    "projects": [
-      "*"
-    ],
+    "projects": ["*"],
     "projectsRelationship": "fixed",
     "version": {
       "conventionalCommits": true,

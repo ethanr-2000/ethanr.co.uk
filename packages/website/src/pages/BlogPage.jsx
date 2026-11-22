@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
-import { useParams } from 'react-router';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import Container from "react-bootstrap/cjs/Container";
 
 function BlogPage() {
   const { blogId } = useParams();
-  const [blogContent, setBlogContent] = useState('');
+  const [blogContent, setBlogContent] = useState("");
 
   useEffect(() => {
     const fetchBlogContent = async () => {
@@ -16,13 +16,13 @@ function BlogPage() {
         const blogText = await response.text();
         const defaultText = await defaultResponse.text();
 
-        if (!response.ok || await blogText === defaultText) {
-          window.location.href = `/${blogId}`
+        if (!response.ok || (await blogText) === defaultText) {
+          window.location.href = `/${blogId}`;
         }
-        
+
         setBlogContent(blogText);
-      } catch (error) {
-        window.location.href = `/${blogId}`
+      } catch {
+        window.location.href = `/${blogId}`;
       }
     };
 
@@ -35,7 +35,7 @@ function BlogPage() {
         <p>{blogContent}</p>
       </div>
     </Container>
-  )
+  );
 }
 
-export default BlogPage
+export default BlogPage;
