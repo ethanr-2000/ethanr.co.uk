@@ -1,7 +1,7 @@
 import React from "react";
 
 function Blogs({ title, blogs, maxItems = Infinity, fullPageLink }) {
-  const sortedFilteredBlogs = blogs.reverse().slice(0, maxItems);
+  const sortedFilteredBlogs = blogs.toReversed().slice(0, maxItems);
   const overflowItems = blogs.length - sortedFilteredBlogs.length;
 
   return (
