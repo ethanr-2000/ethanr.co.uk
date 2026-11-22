@@ -6,6 +6,9 @@ per syllable and every syllable has known spellings. That is worked out here onc
 The site only fetches the shards for the words typed and picks spellings at random.
 
 Run from this directory: pipenv run python src/generate.py
+
+src/data/pronunciation_dictionary was built by
+dictionary-scripts/create_pronunciation_dictionary.py.
 """
 import json
 import pathlib
