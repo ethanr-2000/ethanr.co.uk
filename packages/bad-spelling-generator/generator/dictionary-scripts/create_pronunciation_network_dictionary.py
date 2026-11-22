@@ -1,3 +1,6 @@
+import pathlib
+import sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / 'src'))
 from helpers.tokenizer import tokenizer
 from helpers.util import *
 from collections import Counter

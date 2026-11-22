@@ -1,6 +1,8 @@
-import pickle
+import pathlib
+import sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / 'src'))
 from helpers.tokenizer import tokenizer
-from helpers.util import phone_to_syllable_list, load_english_words, load_isle
+from helpers.util import phone_to_syllable_list, load_english_words, load_isle, save_pronunciation_dictionary
 
 words = load_english_words()
 isleDict = load_isle()
@@ -27,5 +29,4 @@ for word in words:
         pronunciations_dictionary[syl].setdefault(tokenized_word[i], []).append(tokenized_word)
 
 
-with open('src/pronunciations/pronunciation_dictionary', mode='wb') as file:
-    pickle.dump(pronunciations_dictionary, file)
+save_pronunciation_dictionary(pronunciations_dictionary)
