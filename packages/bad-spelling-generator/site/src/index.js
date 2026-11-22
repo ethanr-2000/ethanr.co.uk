@@ -1,3 +1,5 @@
+import { spellBadText } from "./spelling.js";
+
 let previousInput = '';
 let counter = 0;
 
@@ -28,35 +30,31 @@ function spellBad() {
         output.innerHTML = '';
     }
 
-    let request = new XMLHttpRequest();
-    const currentDomain = window.location.origin;
-    request.open("GET", `${currentDomain}/api?text=${raw_input}`, true);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.onreadystatechange = (e) => {
-        if (request.readyState === 4 && request.status === 200) {
-            let res = JSON.parse(request.responseText);
-            let tooltips = [];
-            output.innerHTML = '';
-            for (let i = 0; i < res.words.length; i++) {
-                output.innerHTML += res.words[i].badlySpelled.join('§');
-                if (res.words[i].badlySpelled.join('') === res.words[i].word) {
-                    tooltips.push([res.words[i].word]);
-                    continue;
-                }
-                if (res.words[i].syllableOrigins) {
-                    let tooltip = [];
-                    for (let j = 0; j < res.words[i].syllableOrigins.length; j++) {
-                        let sourceWord = res.words[i].syllableOrigins[j].word.join('');
-                        tooltip.push(sourceWord);
-                    }
-                    tooltips.push(tooltip);
-                }
-            }
-            output.style.color = '#000';
-            prepareHighlights(output, tooltips);
+    spellBadText(raw_input).then((res) => {
+        // A slower, older request can finish after a newer one
+        if (raw_input !== input.value) {
+            return;
         }
-    }
-    request.send();
+        let tooltips = [];
+        output.innerHTML = '';
+        for (let i = 0; i < res.words.length; i++) {
+            output.innerHTML += res.words[i].badlySpelled.join('§');
+            if (res.words[i].badlySpelled.join('') === res.words[i].word) {
+                tooltips.push([res.words[i].word]);
+                continue;
+            }
+            if (res.words[i].syllableOrigins) {
+                let tooltip = [];
+                for (let j = 0; j < res.words[i].syllableOrigins.length; j++) {
+                    let sourceWord = res.words[i].syllableOrigins[j].word.join('');
+                    tooltip.push(sourceWord);
+                }
+                tooltips.push(tooltip);
+            }
+        }
+        output.style.color = '#000';
+        prepareHighlights(output, tooltips);
+    });
 }
 
 function prepareHighlights(element, tooltips) {

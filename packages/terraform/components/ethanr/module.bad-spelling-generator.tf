@@ -1,17 +1,19 @@
-module "bad-spelling-generator" {
-  source = "../../modules/project/bad-spelling-generator"
+# A static site: the page fetches its spelling data from data/ and does the rest itself
+module "bad_spelling_generator" {
+  source = "../../modules/generic/cloudflare-worker"
 
-  aws = local.aws
-
-  cloudflare_account_id = var.cloudflare_account_id
-  cloudflare_zone_id    = var.cloudflare_zone_id
-  fqdn                  = "bad-spelling-generator.${var.fqdn}"
-
-  module_parents = []
+  account_id       = var.cloudflare_account_id
+  zone_id          = var.cloudflare_zone_id
+  hostname         = "bad-spelling-generator.${var.fqdn}"
+  assets_directory = "${local.build_root}/ethanr.co.uk-bsg-site"
 
   unique_ids = {
-    local   = "${local.unique_id}-bsg"
-    account = "${local.unique_id_account}-bsg"
-    global  = "${local.unique_id_global}-bsg"
+    local = "${local.unique_id}-bsg"
   }
+}
+
+# Keeps the existing Worker and custom domain rather than recreating them
+moved {
+  from = module.bad-spelling-generator.module.worker
+  to   = module.bad_spelling_generator
 }

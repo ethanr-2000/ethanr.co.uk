@@ -55,7 +55,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is the monorepo for `ethanr.co.uk`, containing the source code for the main site, sub-projects and infrastructure-as-code for deploying to Cloudflare Workers. bad-spelling-generator's API still runs on AWS Lambda.
+This is the monorepo for `ethanr.co.uk`, containing the source code for the main site, sub-projects and infrastructure-as-code for deploying to Cloudflare Workers.
 
 ### Built With
 

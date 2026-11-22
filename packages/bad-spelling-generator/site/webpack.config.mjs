@@ -23,7 +23,8 @@ export default {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "src" },
+        // Static files and the generated data; the JavaScript is bundled instead
+        { from: "src", globOptions: { ignore: ["**/*.js"] } },
       ],
     }),
   ],
