@@ -8,7 +8,6 @@
 [![project_license][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -26,8 +25,6 @@
 
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -53,6 +50,7 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 This is the monorepo for `ethanr.co.uk`, containing the source code for the main site, sub-projects and infrastructure-as-code for deploying to Cloudflare Workers.
@@ -68,20 +66,25 @@ This is the monorepo for `ethanr.co.uk`, containing the source code for the main
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* [NodeJS](https://nodejs.org/en)
-  
+
+- [NodeJS](https://nodejs.org/en)
+
   Using [nvm](https://github.com/nvm-sh/nvm) to manage NodeJS means you can easily match your installed version of Node to what is compatible with this project.
+
   ```sh
   nvm use 22
   ```
-* [pnpm](https://pnpm.io/)
-  
+
+- [pnpm](https://pnpm.io/)
+
   Using corepack to manage pnpm means your version of pnpm will automatically be matched to the version in the `package.json`
+
   ```sh
   corepack enable
   ```
-* [Terraform](https://www.terraform.io/) (deployment only)
-  
+
+- [Terraform](https://www.terraform.io/) (deployment only)
+
   This project is built with [tfenv](https://github.com/tfutils/tfenv) and [tfscaffold](https://github.com/tfutils/tfscaffold). Tfenv will match your installed version of Terraform to the version specified in the repository. Tfscaffold is used as a framework for managing remote state in S3 and organising resources and variables.
 
 ### Installation
@@ -110,17 +113,22 @@ If you have an AWS account [with a registered domain](https://docs.aws.amazon.co
 3. In `packages/terraform/components/variables`, change the FQDN variable to your domain name.
 4. If deploying to a region other than eu-west-2, modify all references to eu-west-2 to the region of your choice.
 5. Bootstrap the project:
-  ```sh
-  packages/terraform/bin/terraform.sh -r eu-west-2 -p er --bootstrap -a apply
-  ```
+
+```sh
+packages/terraform/bin/terraform.sh -r eu-west-2 -p er --bootstrap -a apply
+```
+
 6. Plan the "prod" environment:
-  ```sh
-  packages/terraform/bin/terraform.sh -t -r eu-west-2 -p er -g main -e prod -c ethanr -a plan
-  ```
+
+```sh
+packages/terraform/bin/terraform.sh -t -r eu-west-2 -p er -g main -e prod -c ethanr -a plan
+```
+
 7. Deploy the "prod" environment:
-  ```sh
-  packages/terraform/bin/terraform.sh -t -r eu-west-2 -p er -g main -e prod -c ethanr -a apply
-  ```
+
+```sh
+packages/terraform/bin/terraform.sh -t -r eu-west-2 -p er -g main -e prod -c ethanr -a apply
+```
 
 The project should become available at the domain name you provided.
 
@@ -129,9 +137,10 @@ Optionally, you can deploy a dev environment.
 1. In AWS, find the [Route53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html) that was created in the prod deployment.
 2. Modify `packages/terraform/etc/env_eu-west-2_dev.tfvars`, changing the hosted zone ID to the one found in step 1.
 3. Deploy the "dev" environment:
-  ```sh
-  packages/terraform/bin/terraform.sh -t -r eu-west-2 -p er -g main -e dev -c ethanr -a apply
-  ```
+
+```sh
+packages/terraform/bin/terraform.sh -t -r eu-west-2 -p er -g main -e dev -c ethanr -a apply
+```
 
 ### NX Cloud
 
@@ -144,30 +153,28 @@ This project uses NX to orchestrate releases and cache lint/test/build processes
 
 This project comes with a complete set of GitHub actions workflows for automatically linting, testing, building, deploying and releasing the project. These can be used if you have forked this repository.
 
-* When a PR to master is raised:
-  * Lint, test, build
-  * Create pre-release packages
-  * Deploy the version to `dev` environment
-* When a PR to master is closed:
-  * Clean up feature versions
-  * If the PR was merged:
-  * Lint, test, build
-  * Create release packages
-  * Create GitHub release
-  * Plan changes to `prod`
-  * Following a manual approval, deploy the version to `prod`
+- When a PR to master is raised:
+  - Lint, test, build
+  - Create pre-release packages
+  - Deploy the version to `dev` environment
+- When a PR to master is closed:
+  - Clean up feature versions
+  - If the PR was merged:
+  - Lint, test, build
+  - Create release packages
+  - Create GitHub release
+  - Plan changes to `prod`
+  - Following a manual approval, deploy the version to `prod`
 
 The workflows require the following repository secrets to be set:
 
-* `AWS_ACCOUNT_NUMBER`
-* `NX_CLOUD_ACCESS_TOKEN`: The access token for your NX cloud project
-* `WORKFLOW_GITHUB_TOKEN`: A classic GitHub token with permissions to commit directly to main, publish and delete packages and create releases.
-
+- `AWS_ACCOUNT_NUMBER`
+- `NX_CLOUD_ACCESS_TOKEN`: The access token for your NX cloud project
+- `WORKFLOW_GITHUB_TOKEN`: A classic GitHub token with permissions to commit directly to main, publish and delete packages and create releases.
 
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
 
 ## Contact
 
@@ -175,9 +182,9 @@ Ethan Roberts
 
 Project Link: [https://github.com/ethanr-2000/ethanr.co.uk](https://github.com/ethanr-2000/ethanr.co.uk)
 
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/ethanr-2000/ethanr.co.uk.svg?style=for-the-badge
 [contributors-url]: https://github.com/ethanr-2000/ethanr.co.uk/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/ethanr-2000/ethanr.co.uk.svg?style=for-the-badge

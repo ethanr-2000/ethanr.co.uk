@@ -24,7 +24,10 @@ function load(path) {
 
 // Must match words_file() in generate.py
 function wordsFile(word) {
-  return Array.from(word).slice(0, 2).join("").replace(/[^a-z0-9]/g, "_");
+  return Array.from(word)
+    .slice(0, 2)
+    .join("")
+    .replace(/[^a-z0-9]/g, "_");
 }
 
 // Only the file's own keys, so words like "__proto__" don't find Object's properties
@@ -58,7 +61,9 @@ async function respell(word) {
 export function spellBadText(text) {
   // With a capture group, split alternates: between, word, between, word, ...
   const pieces = text.split(/([\p{L}\p{N}_']+)/u);
-  return Promise.all(pieces.map(async (piece, i) => (
-    i % 2 === 1 ? { text: piece, syllables: await respell(piece) } : { text: piece }
-  )));
+  return Promise.all(
+    pieces.map(async (piece, i) =>
+      i % 2 === 1 ? { text: piece, syllables: await respell(piece) } : { text: piece },
+    ),
+  );
 }

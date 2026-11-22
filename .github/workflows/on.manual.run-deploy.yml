@@ -5,15 +5,15 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy to'
+        description: "Environment to deploy to"
         type: choice
         options: [dev, prod]
         default: dev
 
 jobs:
   build:
-    name: 'Build'
-    uses: './.github/workflows/reusable.root.build-publish.yml'
+    name: "Build"
+    uses: "./.github/workflows/reusable.root.build-publish.yml"
     secrets: inherit
     permissions:
       id-token: write
@@ -23,9 +23,9 @@ jobs:
       release: false
 
   deploy:
-    name: 'Deploy'
+    name: "Deploy"
     needs: build
-    uses: './.github/workflows/reusable.root.deploy.yml'
+    uses: "./.github/workflows/reusable.root.deploy.yml"
     concurrency: deploy-${{ inputs.environment }}
     secrets: inherit
     with:

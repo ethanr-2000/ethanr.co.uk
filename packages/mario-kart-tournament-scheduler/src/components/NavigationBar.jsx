@@ -1,6 +1,6 @@
-import * as React from 'react'
-import Navbar from 'react-bootstrap/Navbar'
-import Container from 'react-bootstrap/Container'
+import * as React from "react";
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
 
 const NavigationBar = () => {
   return (
@@ -9,7 +9,7 @@ const NavigationBar = () => {
         <Navbar.Brand className="m-auto">Mario Kart Tournament Scheduler</Navbar.Brand>
       </Container>
     </Navbar>
-  )
-}
+  );
+};
 
-export default NavigationBar
+export default NavigationBar;

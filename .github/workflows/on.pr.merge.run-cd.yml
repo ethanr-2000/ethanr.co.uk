@@ -6,12 +6,12 @@ on:
 
 jobs:
   get-env-name:
-    uses: './.github/workflows/reusable.root.get-env-name.yml'
+    uses: "./.github/workflows/reusable.root.get-env-name.yml"
 
   build-publish:
-    if: '${{ github.event.pull_request.merged }}'
-    name: 'Build & Publish'
-    uses: './.github/workflows/reusable.root.build-publish.yml'
+    if: "${{ github.event.pull_request.merged }}"
+    name: "Build & Publish"
+    uses: "./.github/workflows/reusable.root.build-publish.yml"
     secrets: inherit
     permissions:
       id-token: write
@@ -19,10 +19,10 @@ jobs:
       packages: write
 
   deploy:
-    name: 'Deploy'
+    name: "Deploy"
     needs: build-publish
     if: ${{ needs.build-publish.outputs.tag-version }}
-    uses: './.github/workflows/reusable.root.deploy.yml'
+    uses: "./.github/workflows/reusable.root.deploy.yml"
     concurrency: deploy-prod
     secrets: inherit
     with:
@@ -35,15 +35,14 @@ jobs:
       environment: prod
 
   delete-artifacts:
-    name: 'Delete Feature Artifacts'
-    needs: 
-      - 'build-publish'
-      - 'get-env-name'
-    uses: './.github/workflows/reusable.root.delete-feature-artifacts.yml'
+    name: "Delete Feature Artifacts"
+    needs:
+      - "build-publish"
+      - "get-env-name"
+    uses: "./.github/workflows/reusable.root.delete-feature-artifacts.yml"
     secrets: inherit
     permissions:
       id-token: write
       packages: write
     with:
       env-name: ${{ needs.get-env-name.outputs.env-name }}
-    

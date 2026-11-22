@@ -2,48 +2,48 @@ on:
   workflow_call:
     inputs:
       plan:
-        description: 'Whether to Terraform Plan before deploying'
+        description: "Whether to Terraform Plan before deploying"
         type: boolean
         default: true
 
       terraform-version:
-        description: 'Terraform version to use e.g. 1.0.5'
+        description: "Terraform version to use e.g. 1.0.5"
         type: string
         required: true
 
       tag-version:
-        description: 'Tag version to deploy e.g. v1.0.0'
+        description: "Tag version to deploy e.g. v1.0.0"
         type: string
         required: true
 
       aws-region:
-        description: 'AWS Region to deploy to e.g. eu-west-2'
+        description: "AWS Region to deploy to e.g. eu-west-2"
         type: string
         required: true
 
       project:
-        description: 'TF Project to deploy e.g. er'
+        description: "TF Project to deploy e.g. er"
         type: string
         required: true
 
       component:
-        description: 'TF Component to deploy e.g. website'
+        description: "TF Component to deploy e.g. website"
         type: string
         required: true
 
       group:
-        description: 'TF Group to deploy e.g. main'
+        description: "TF Group to deploy e.g. main"
         type: string
         required: true
-      
+
       environment:
-        description: 'TF Environment to deploy to e.g. dev, staging, prod'
+        description: "TF Environment to deploy to e.g. dev, staging, prod"
         type: string
         required: true
 
     secrets:
       CLOUDFLARE_API_TOKEN:
-        description: 'Cloudflare API token for the Terraform Cloudflare provider'
+        description: "Cloudflare API token for the Terraform Cloudflare provider"
         required: true
 
 jobs:
@@ -55,90 +55,90 @@ jobs:
       id-token: write
       contents: read
     steps:
-    - name: Download Build
-      uses: actions/download-artifact@v8
-      with:
-        name: build
-        path: build
+      - name: Download Build
+        uses: actions/download-artifact@v8
+        with:
+          name: build
+          path: build
 
-    - name: Install Terraform
-      uses: hashicorp/setup-terraform@v4
-      with:
-        terraform_version: ${{ inputs.terraform-version }}
-      
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v6
-      with:
-        role-to-assume: arn:aws:iam::197239729734:role/TerraformExecution
-        aws-region: eu-west-2
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: ${{ inputs.terraform-version }}
 
-    - name: Plan
-      env:
-        REGION: ${{ inputs.aws-region }}
-        PROJECT: ${{ inputs.project }}
-        COMPONENT: ${{ inputs.component }}
-        GROUP: ${{ inputs.group }}
-        ENVIRONMENT: ${{ inputs.environment }}
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      working-directory: ./build/ethanr.co.uk-terraform
-      run: |
-        chmod +x ./bin/terraform.sh
-        ./bin/terraform.sh \
-          -t -n -w \
-          -r $REGION \
-          -p $PROJECT \
-          -g $GROUP \
-          -c $COMPONENT \
-          -e $ENVIRONMENT \
-          -a plan
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::197239729734:role/TerraformExecution
+          aws-region: eu-west-2
+
+      - name: Plan
+        env:
+          REGION: ${{ inputs.aws-region }}
+          PROJECT: ${{ inputs.project }}
+          COMPONENT: ${{ inputs.component }}
+          GROUP: ${{ inputs.group }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        working-directory: ./build/ethanr.co.uk-terraform
+        run: |
+          chmod +x ./bin/terraform.sh
+          ./bin/terraform.sh \
+            -t -n -w \
+            -r $REGION \
+            -p $PROJECT \
+            -g $GROUP \
+            -c $COMPONENT \
+            -e $ENVIRONMENT \
+            -a plan
 
   apply:
     name: Apply
     needs: plan
     # Ensure apply is run after plan, even if it was conditionally skipped
-    if: ${{ !cancelled() && !failure() && (needs.plan.result == 'success' || needs.plan.result == 'skipped') }} 
+    if: ${{ !cancelled() && !failure() && (needs.plan.result == 'success' || needs.plan.result == 'skipped') }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     permissions:
       id-token: write
       contents: read
     steps:
-    - name: Download Build
-      uses: actions/download-artifact@v8
-      with:
-        name: build
-        path: build
+      - name: Download Build
+        uses: actions/download-artifact@v8
+        with:
+          name: build
+          path: build
 
-    - name: Directory Structure
-      run: tree -ralp
+      - name: Directory Structure
+        run: tree -ralp
 
-    - name: Install Terraform
-      uses: hashicorp/setup-terraform@v4
-      with:
-        terraform_version: ${{ inputs.terraform-version }}
-      
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v6
-      with:
-        role-to-assume: arn:aws:iam::197239729734:role/TerraformExecution
-        aws-region: eu-west-2
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: ${{ inputs.terraform-version }}
 
-    - name: Apply
-      env:
-        REGION: ${{ inputs.aws-region }}
-        PROJECT: ${{ inputs.project }}
-        COMPONENT: ${{ inputs.component }}
-        GROUP: ${{ inputs.group }}
-        ENVIRONMENT: ${{ inputs.environment }}
-        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      working-directory: ./build/ethanr.co.uk-terraform
-      run: |
-        chmod +x ./bin/terraform.sh
-        ./bin/terraform.sh \
-          -t -n -w \
-          -r $REGION \
-          -p $PROJECT \
-          -g $GROUP \
-          -c $COMPONENT \
-          -e $ENVIRONMENT \
-          -a apply
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::197239729734:role/TerraformExecution
+          aws-region: eu-west-2
+
+      - name: Apply
+        env:
+          REGION: ${{ inputs.aws-region }}
+          PROJECT: ${{ inputs.project }}
+          COMPONENT: ${{ inputs.component }}
+          GROUP: ${{ inputs.group }}
+          ENVIRONMENT: ${{ inputs.environment }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        working-directory: ./build/ethanr.co.uk-terraform
+        run: |
+          chmod +x ./bin/terraform.sh
+          ./bin/terraform.sh \
+            -t -n -w \
+            -r $REGION \
+            -p $PROJECT \
+            -g $GROUP \
+            -c $COMPONENT \
+            -e $ENVIRONMENT \
+            -a apply

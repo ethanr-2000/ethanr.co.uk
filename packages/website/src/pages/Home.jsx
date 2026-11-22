@@ -1,7 +1,7 @@
-import React from "react"
+import React from "react";
 import Container from "react-bootstrap/cjs/Container";
-import Blogs from "../components/Blogs"
-import ThingsIveMade from "../components/ThingsIveMade"
+import Blogs from "../components/Blogs";
+import ThingsIveMade from "../components/ThingsIveMade";
 import blogs from "../data/blogs.json";
 import archivedBlogs from "../data/archived-blogs.json";
 import thingsivemade from "../data/thingsivemade.json";
@@ -21,10 +21,10 @@ function Home() {
           maxItems={5}
           fullPageLink={"/archived"}
         />
-        <ThingsIveMade thingsivemade={thingsivemade}/>
+        <ThingsIveMade thingsivemade={thingsivemade} />
       </div>
     </Container>
-  )
+  );
 }
 
-export default Home
+export default Home;

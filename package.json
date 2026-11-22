@@ -1,10 +1,23 @@
 {
   "name": "@ethanr-2000/ethanr.co.uk",
   "version": "0.9.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ethanr-2000/ethanr.co.uk.git"
+  },
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "build": "nx run-many --target=build --all --exclude=@ethanr-2000/ethanr.co.uk",
     "bundle": "nx run-many --target=bundle --all --exclude=@ethanr-2000/ethanr.co.uk",
-    "lint": "nx run-many --target=lint --all --exclude=@ethanr-2000/ethanr.co.uk",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "test": "nx run-many --target=test --all --exclude=@ethanr-2000/ethanr.co.uk",
     "prepare": "husky"
   },
@@ -17,19 +30,10 @@
     "@swc/helpers": "0.5.24",
     "commitlint": "^21.2.4",
     "husky": "^9.1.7",
-    "nx": "24.0.6"
+    "nx": "24.0.6",
+    "oxfmt": "0.79.0",
+    "oxlint": "1.94.0"
   },
   "packageManager": "pnpm@12.21.0",
-  "nx": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ethanr-2000/ethanr.co.uk.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
-    "access": "restricted"
-  },
-  "files": [
-    "build"
-  ]
+  "nx": {}
 }

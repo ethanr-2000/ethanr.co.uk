@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [
+    "CHANGELOG.md",
+    "pnpm-lock.yaml",
+    "packages/bad-spelling-generator/site/src/data/",
+    "packages/terraform/**/README.md",
+    "packages/bad-spelling-generator/generator/dictionary-scripts/"
+  ]
+}

@@ -2,7 +2,7 @@ on:
   workflow_call:
     inputs:
       env-name:
-        description: 'Env name to match feature artifacts to delete'
+        description: "Env name to match feature artifacts to delete"
         type: string
         required: true
 
@@ -14,89 +14,89 @@ jobs:
       id-token: write
       packages: write
     steps:
-    - name: Checkout
-      uses: actions/checkout@v7
-      with:
-        fetch-depth: 0
-      
-    - name: Install pnpm
-      uses: pnpm/action-setup@v6
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
-    - name: Install Node
-      uses: actions/setup-node@v7
-      with:
-        node-version: 26
-        registry-url: 'https://npm.pkg.github.com'
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
 
-    - name: Get PNPM Store
-      run: echo "PNPM_STORE=$(pnpm store path)" >> $GITHUB_ENV
+      - name: Install Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          registry-url: "https://npm.pkg.github.com"
 
-    - name: PNPM Cache
-      uses: actions/cache@v6
-      with:
-        path: ${{ env.PNPM_STORE }}
-        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-
+      - name: Get PNPM Store
+        run: echo "PNPM_STORE=$(pnpm store path)" >> $GITHUB_ENV
 
-    - name: PNPM Auth
-      run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+      - name: PNPM Cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.PNPM_STORE }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
-    - name: Install Dependencies
-      run: pnpm install
-      
-    - name: Delete Artifacts
-      id: delete
-      uses: actions/github-script@v8
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
-        ENV_NAME: ${{ inputs.env-name }}
-      with:
-        github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
-        script: |
-          const { releaseVersion } = require('nx/release');
+      - name: PNPM Auth
+        run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
 
-          const ENV_NAME = process.env.ENV_NAME;
-          if (!ENV_NAME) {
-            console.log('No ENV_NAME provided');
-            process.exit(1);
-          }
+      - name: Install Dependencies
+        run: pnpm install
 
-          async function deletePackage(packageName, envName) {
-            console.log(`Deleting ${packageName} versions that include ${envName}`);
-            const matchingPackages = await github.rest.packages.getAllPackageVersionsForPackageOwnedByAuthenticatedUser({
-              package_type: 'npm',
-              package_name: packageName,
-            });
+      - name: Delete Artifacts
+        id: delete
+        uses: actions/github-script@v8
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+          ENV_NAME: ${{ inputs.env-name }}
+        with:
+          github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+          script: |
+            const { releaseVersion } = require('nx/release');
 
-            const featureVersions = matchingPackages.data
-              .filter((v) => v.name.includes(envName))
-              .map((v) => ({
-                id: v.id,
-                version: v.name
-              }));
+            const ENV_NAME = process.env.ENV_NAME;
+            if (!ENV_NAME) {
+              console.log('No ENV_NAME provided');
+              process.exit(1);
+            }
 
-            console.log(`Found ${featureVersions.length} feature versions to delete: ${JSON.stringify(featureVersions)}`);
-            featureVersions.forEach(async (v) => {
-              console.log(`Deleting ${packageName}@${v.version}`);
-              await github.rest.packages.deletePackageVersionForAuthenticatedUser({
+            async function deletePackage(packageName, envName) {
+              console.log(`Deleting ${packageName} versions that include ${envName}`);
+              const matchingPackages = await github.rest.packages.getAllPackageVersionsForPackageOwnedByAuthenticatedUser({
                 package_type: 'npm',
                 package_name: packageName,
-                package_version_id: v.id
-              })
-            });
-          }
+              });
 
-          const { projectsVersionData } = await releaseVersion({ dryRun: true });
-          console.log({ projectsVersionData });
+              const featureVersions = matchingPackages.data
+                .filter((v) => v.name.includes(envName))
+                .map((v) => ({
+                  id: v.id,
+                  version: v.name
+                }));
 
-          const deletePromises = Object.keys(projectsVersionData).map(async (key) => {
-            if (key.includes('/')) {
-              // Do not include the scope e.g. @ethanr-2000/ethanr.co.uk => ethanr.co.uk
-              key = key.split('/')[1];
+              console.log(`Found ${featureVersions.length} feature versions to delete: ${JSON.stringify(featureVersions)}`);
+              featureVersions.forEach(async (v) => {
+                console.log(`Deleting ${packageName}@${v.version}`);
+                await github.rest.packages.deletePackageVersionForAuthenticatedUser({
+                  package_type: 'npm',
+                  package_name: packageName,
+                  package_version_id: v.id
+                })
+              });
             }
-            return deletePackage(key, ENV_NAME);
-          });
 
-          await Promise.all(deletePromises);
-          process.exit(0);
+            const { projectsVersionData } = await releaseVersion({ dryRun: true });
+            console.log({ projectsVersionData });
+
+            const deletePromises = Object.keys(projectsVersionData).map(async (key) => {
+              if (key.includes('/')) {
+                // Do not include the scope e.g. @ethanr-2000/ethanr.co.uk => ethanr.co.uk
+                key = key.split('/')[1];
+              }
+              return deletePackage(key, ENV_NAME);
+            });
+
+            await Promise.all(deletePromises);
+            process.exit(0);

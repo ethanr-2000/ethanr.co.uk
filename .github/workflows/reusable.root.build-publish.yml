@@ -2,26 +2,26 @@ on:
   workflow_call:
     inputs:
       env-name:
-        description: 'Env name to tag feature artifacts'
+        description: "Env name to tag feature artifacts"
         required: false
-        default: ''
+        default: ""
         type: string
 
       prerelease:
-        description: 'Create a pre-release'
+        description: "Create a pre-release"
         required: false
         default: false
         type: boolean
 
       release:
-        description: 'Version, publish and release. False only builds'
+        description: "Version, publish and release. False only builds"
         required: false
         default: true
         type: boolean
 
     outputs:
       tag-version:
-        description: 'Tag version built e.g. v1.0.0-foo'
+        description: "Tag version built e.g. v1.0.0-foo"
         value: ${{ jobs.build-publish.outputs.tag-version }}
 
 jobs:
@@ -35,133 +35,136 @@ jobs:
       contents: write
       packages: write
     steps:
-    - name: Checkout
-      uses: actions/checkout@v7
-      with:
-        fetch-depth: 0
-    
-    - name: Install pnpm
-      uses: pnpm/action-setup@v6
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
-    - name: Install Node
-      uses: actions/setup-node@v7
-      with:
-        node-version: 26
-        registry-url: 'https://npm.pkg.github.com'
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
 
-    - name: Get PNPM Store
-      run: echo "PNPM_STORE=$(pnpm store path)" >> $GITHUB_ENV
+      - name: Install Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          registry-url: "https://npm.pkg.github.com"
 
-    - name: PNPM Cache
-      uses: actions/cache@v6
-      with:
-        path: ${{ env.PNPM_STORE }}
-        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-
+      - name: Get PNPM Store
+        run: echo "PNPM_STORE=$(pnpm store path)" >> $GITHUB_ENV
 
-    - name: PNPM Auth
-      run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+      - name: PNPM Cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.PNPM_STORE }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
-    - name: Install Dependencies
-      run: pnpm install
+      - name: PNPM Auth
+        run: pnpm config set '//npm.pkg.github.com/:_authToken' ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
 
-    - name: Bundle
-      env:
-        NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-      run: pnpm bundle
+      - name: Install Dependencies
+        run: pnpm install
 
-    - name: Upload Build
-      uses: actions/upload-artifact@v7
-      with:
-        name: build
-        path: build
-        include-hidden-files: true
-        if-no-files-found: error
-        retention-days: 1
+      - name: Lint and Format Check
+        run: pnpm lint && pnpm format:check
 
-    - name: Configure Git Author
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "noreply@github.com"
+      - name: Bundle
+        env:
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+        run: pnpm bundle
 
-    - name: Set SHA
-      if: ${{ inputs.prerelease }}
-      run: |
-        declare sha=$(git rev-parse --short HEAD)
-        echo "SHA=$sha" >> $GITHUB_ENV
+      - name: Upload Build
+        uses: actions/upload-artifact@v7
+        with:
+          name: build
+          path: build
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
 
-    - name: Release
-      id: release
-      if: ${{ inputs.release }}
-      uses: actions/github-script@v8
-      env:
-        SHA: ${{ env.SHA }}
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
-        NODE_AUTH_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
-        NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-        ENV_NAME: ${{ inputs.env-name }}
-      with:
-        github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
-        script: |
-          const { release, releaseChangelog, releasePublish, releaseVersion } = require('nx/release');
+      - name: Configure Git Author
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "noreply@github.com"
 
-          const ENV_NAME = process.env.ENV_NAME;
-          const SHA = process.env.SHA;
-          const prerelease = ${{ inputs.prerelease }};
+      - name: Set SHA
+        if: ${{ inputs.prerelease }}
+        run: |
+          declare sha=$(git rev-parse --short HEAD)
+          echo "SHA=$sha" >> $GITHUB_ENV
 
-          if (prerelease) {
-            if (!ENV_NAME) {
-              console.log('No ENV_NAME');
-              process.exit(1);
+      - name: Release
+        id: release
+        if: ${{ inputs.release }}
+        uses: actions/github-script@v8
+        env:
+          SHA: ${{ env.SHA }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+          ENV_NAME: ${{ inputs.env-name }}
+        with:
+          github-token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+          script: |
+            const { release, releaseChangelog, releasePublish, releaseVersion } = require('nx/release');
+
+            const ENV_NAME = process.env.ENV_NAME;
+            const SHA = process.env.SHA;
+            const prerelease = ${{ inputs.prerelease }};
+
+            if (prerelease) {
+              if (!ENV_NAME) {
+                console.log('No ENV_NAME');
+                process.exit(1);
+              }
+
+              console.log('Creating pre-release');
+
+              const { workspaceVersion, projectsVersionData } = await releaseVersion({ dryRun: true, verbose: true });
+
+              console.log({ workspaceVersion, projectsVersionData });
+              if (!workspaceVersion) {
+                console.log('No new version');
+                process.exit(0);
+                return;
+              }
+
+              const prereleaseVersion = workspaceVersion + '-' + ENV_NAME + '-' + SHA;
+              console.log('Using Prerelease Version:', prereleaseVersion);
+
+              for (const key in projectsVersionData) {
+                projectsVersionData[key] = prereleaseVersion;
+              }
+
+              await releaseVersion({
+                specifier: prereleaseVersion,
+                verbose: true
+              });
+
+              await releaseChangelog({
+                dryRun: true,
+                version: prereleaseVersion,
+                versionData: projectsVersionData, 
+                createRelease: false, 
+                verbose: true
+              });
+
+              const publishResults = await releasePublish({
+                verbose: true,
+                tag: '${{ github.ref }}'
+              });
+
+              // Fail here so a broken registry token shows up on the PR, not after merge
+              const failedProjects = Object.keys(publishResults).filter((project) => publishResults[project].code !== 0);
+              if (failedProjects.length > 0) {
+                core.setFailed('Failed to publish: ' + failedProjects.join(', '));
+                process.exit(1);
+              }
+
+              core.setOutput('tag-version', prereleaseVersion);
+            } else {
+              const { workspaceVersion } = await release({ verbose: true, yes: true });
+              core.setOutput('tag-version', workspaceVersion);
             }
-
-            console.log('Creating pre-release');
-
-            const { workspaceVersion, projectsVersionData } = await releaseVersion({ dryRun: true, verbose: true });
-
-            console.log({ workspaceVersion, projectsVersionData });
-            if (!workspaceVersion) {
-              console.log('No new version');
-              process.exit(0);
-              return;
-            }
-
-            const prereleaseVersion = workspaceVersion + '-' + ENV_NAME + '-' + SHA;
-            console.log('Using Prerelease Version:', prereleaseVersion);
-
-            for (const key in projectsVersionData) {
-              projectsVersionData[key] = prereleaseVersion;
-            }
-
-            await releaseVersion({
-              specifier: prereleaseVersion,
-              verbose: true
-            });
-
-            await releaseChangelog({
-              dryRun: true,
-              version: prereleaseVersion,
-              versionData: projectsVersionData, 
-              createRelease: false, 
-              verbose: true
-            });
-
-            const publishResults = await releasePublish({
-              verbose: true,
-              tag: '${{ github.ref }}'
-            });
-
-            // Fail here so a broken registry token shows up on the PR, not after merge
-            const failedProjects = Object.keys(publishResults).filter((project) => publishResults[project].code !== 0);
-            if (failedProjects.length > 0) {
-              core.setFailed('Failed to publish: ' + failedProjects.join(', '));
-              process.exit(1);
-            }
-
-            core.setOutput('tag-version', prereleaseVersion);
-          } else {
-            const { workspaceVersion } = await release({ verbose: true, yes: true });
-            core.setOutput('tag-version', workspaceVersion);
-          }
-          process.exit(0)
+            process.exit(0)

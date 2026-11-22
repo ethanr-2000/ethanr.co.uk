@@ -6,13 +6,13 @@ on:
 
 jobs:
   get-env-name:
-    uses: './.github/workflows/reusable.root.get-env-name.yml'
+    uses: "./.github/workflows/reusable.root.get-env-name.yml"
 
   build-publish:
-    name: 'Build & Publish'
-    needs: 
-      - 'get-env-name'
-    uses: './.github/workflows/reusable.root.build-publish.yml'
+    name: "Build & Publish"
+    needs:
+      - "get-env-name"
+    uses: "./.github/workflows/reusable.root.build-publish.yml"
     secrets: inherit
     permissions:
       id-token: write
@@ -23,11 +23,11 @@ jobs:
       prerelease: true
 
   deploy:
-    name: 'Deploy'
-    needs: 
-      - 'build-publish'
+    name: "Deploy"
+    needs:
+      - "build-publish"
     if: ${{ needs.build-publish.outputs.tag-version }}
-    uses: './.github/workflows/reusable.root.deploy.yml'
+    uses: "./.github/workflows/reusable.root.deploy.yml"
     concurrency: deploy-dev
     secrets: inherit
     with:
